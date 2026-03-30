@@ -1,0 +1,6 @@
+@AhmadHRMSBackend_HostAddress = http://localhost:5279
+
+GET {{AhmadHRMSBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
