@@ -1,0 +1,37 @@
+# Visual Studio
+.vs/
+
+# Ignore bin & obj for ALL projects
+**/bin/
+**/obj/
+
+# User-specific
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Environment
+.env
+
+# Appsettings
+appsettings.Development.json
+appsettings.Production.json
+
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build folders
+bin/
+obj/
+
+# Debug files
+*.pdb
+
+# OS files
+Thumbs.db
+.DS_Store
