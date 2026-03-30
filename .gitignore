@@ -1,5 +1,5 @@
 # Visual Studio
-.vs/
+**/.vs/
 
 # Ignore bin & obj for ALL projects
 **/bin/
@@ -21,7 +21,7 @@ appsettings.Production.json
 
 
 # Visual Studio
-.vs/
+**/.vs/
 *.user
 *.suo
 
