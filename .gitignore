@@ -1,36 +1,26 @@
-# Visual Studio
+# Visual Studio (ignore at ALL levels)
 **/.vs/
 
-# Ignore bin & obj for ALL projects
+# Build folders (ALL projects, ALL levels)
 **/bin/
 **/obj/
 
-# User-specific
+# User-specific files
 *.user
 *.suo
+
+# Debug symbols
+*.pdb
 
 # Logs
 *.log
 
-# Environment
+# Environment files
 .env
 
-# Appsettings
+# Appsettings (optional - only if you don't want to expose configs)
 appsettings.Development.json
 appsettings.Production.json
-
-
-# Visual Studio
-**/.vs/
-*.user
-*.suo
-
-# Build folders
-bin/
-obj/
-
-# Debug files
-*.pdb
 
 # OS files
 Thumbs.db
