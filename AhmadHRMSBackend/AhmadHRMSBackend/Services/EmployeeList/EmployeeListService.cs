@@ -1,5 +1,7 @@
-﻿using AhmadHRMSBackend.dto.EmployeeList;
+﻿using AhmadHRMSBackend.dto.Department;
+using AhmadHRMSBackend.dto.EmployeeList;
 using AhmadHRMSBackend.UnitofWork;
+using System.Linq;
 
 namespace AhmadHRMSBackend.Services.EmployeeList
 {
@@ -26,6 +28,18 @@ namespace AhmadHRMSBackend.Services.EmployeeList
                 StatusName = e.Status?.StatusName,
                 JoinDate = e.JoinDate,
                 Avatar = e.avatar
+            }).ToList();
+        }
+
+        public async Task<List<DepartmentDto>> GetAllDepartments()
+        {
+            var departmemnts = await _unitOfWork.EmployeeList.GetAllDepartments();
+
+            return departmemnts.Select(e => new DepartmentDto
+            {
+                id = e.DepartmentsID,
+                Value = e.Value,
+                Label = e.Label
             }).ToList();
         }
     }

@@ -22,5 +22,9 @@ namespace AhmadHRMSBackend.DataAccessLayer.EmployeeList
               .ToListAsync();
         }
 
+        public async Task<List<AhmadHRMSBackend.Models.Departments.Departments>> GetAllDepartments()
+        {
+            return await _context.Departments.ToListAsync();
+        }
     }
 }
