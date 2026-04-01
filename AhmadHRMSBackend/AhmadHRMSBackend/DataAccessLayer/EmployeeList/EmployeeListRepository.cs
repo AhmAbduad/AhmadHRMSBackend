@@ -26,5 +26,58 @@ namespace AhmadHRMSBackend.DataAccessLayer.EmployeeList
         {
             return await _context.Departments.ToListAsync();
         }
+
+        public async Task<List<AhmadHRMSBackend.Models.Position.Position>> GetAllPosition()
+        {
+            return await _context.Position.ToListAsync();
+        }
+
+        public async Task<List<AhmadHRMSBackend.Models.Status.Status>> GetAllStatus()
+        {
+            return await _context.Status.ToListAsync();
+        }
+
+        public async Task<AhmadHRMSBackend.Models.EmployeeList.EmployeeList> CreateEmployee(string Email, string Name, int DepartmentId, int PositionId, int StatusId, DateTime JoinDate, string Avatar)
+        {
+            var request = new AhmadHRMSBackend.Models.EmployeeList.EmployeeList
+            {
+                Email = Email,
+                Name = Name,
+                DepartmentID = DepartmentId,
+                PositionID = PositionId,
+                StatusID = StatusId,
+                avatar = Avatar,
+                JoinDate = JoinDate,
+            };
+
+            _context.EmployeeList.Add(request);
+
+            return request;
+            
+        }
+
+        public async Task<AhmadHRMSBackend.Models.EmployeeList.EmployeeList> UpdateEmployee(int Id, string Email, string Name, int DepartmentId, int PositionId, int StatusId, DateTime JoinDate, string Avatar)
+        {
+            var employee = await _context.EmployeeList
+                            .FirstOrDefaultAsync(e => e.EmployeeID == Id);
+
+            if (employee == null)
+            {
+                return null; // Employee not found
+            }
+
+            // Update the employee properties
+            employee.Name = Name;
+            employee.Email = Email;
+            employee.DepartmentID = DepartmentId;
+            employee.PositionID = PositionId;
+            employee.StatusID = StatusId;
+            employee.JoinDate = JoinDate;
+            employee.avatar = Avatar;
+
+            
+
+            return employee;
+        }
     }
 }
