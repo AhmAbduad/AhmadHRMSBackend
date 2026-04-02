@@ -13,15 +13,17 @@ namespace AhmadHRMSBackend.UnitofWork
         private readonly AppDbContext _context;
         private IDbContextTransaction _transaction;
         public IEmployeeList EmployeeList { get; }
-
+        public IAttendance Attendance { get; }
 
         // this is unit of work constructor
         public UnitofWork(
                         AppDbContext context,
-                        IEmployeeList employeeList)
+                        IEmployeeList employeeList,
+                        IAttendance attendance)
         {
             _context = context;
             EmployeeList = employeeList;
+            Attendance = attendance;
         }
 
 

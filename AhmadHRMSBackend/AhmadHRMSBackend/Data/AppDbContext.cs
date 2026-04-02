@@ -61,7 +61,20 @@ namespace AhmadHRMSBackend.Data
                 .WithMany(p => p.AttendanceRecords)
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+
+
+
+            modelBuilder.Entity<AttendanceSummary>()
+                .HasIndex(a => new { a.EmployeeId, a.Month, a.Year })
+                .IsUnique();
+
+
+            modelBuilder.Entity<AttendanceSummary>()
+                .HasOne(e => e.Employee)
+                .WithMany(p => p.AttendanceSummary)
+                .HasForeignKey(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

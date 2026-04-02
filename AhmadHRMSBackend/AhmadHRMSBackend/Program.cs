@@ -1,6 +1,8 @@
 using AhmadHRMSBackend.Data;
+using AhmadHRMSBackend.DataAccessLayer.Attendance;
 using AhmadHRMSBackend.DataAccessLayer.EmployeeList;
 using AhmadHRMSBackend.Interfaces;
+using AhmadHRMSBackend.Services.Attendance;
 using AhmadHRMSBackend.Services.EmployeeList;
 using AhmadHRMSBackend.UnitofWork;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IEmployeeList, EmployeeListRepository>();
 builder.Services.AddScoped<EmployeeListService>();
+builder.Services.AddScoped<IAttendance, AttendanceRepository>();
+builder.Services.AddScoped<AttendanceService>();
+
 
 
 builder.Services.AddScoped<IUnitofWork, UnitofWork>();

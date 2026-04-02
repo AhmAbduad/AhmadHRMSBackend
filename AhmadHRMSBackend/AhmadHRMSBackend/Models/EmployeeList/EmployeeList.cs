@@ -1,4 +1,5 @@
-﻿using AhmadHRMSBackend.Models.Departments;
+﻿using AhmadHRMSBackend.Models.AttendanceSummary;
+using AhmadHRMSBackend.Models.Departments;
 using AhmadHRMSBackend.Models.Position;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -63,5 +64,7 @@ namespace AhmadHRMSBackend.Models.EmployeeList
 
 
         public ICollection<AttendanceRecord.AttendanceRecord> AttendanceRecords { get; set; } = new List<AttendanceRecord.AttendanceRecord>();
+
+        public ICollection<AttendanceSummary.AttendanceSummary> AttendanceSummary { get; set; } = new List<AttendanceSummary.AttendanceSummary>();
     }
 }

@@ -6,7 +6,7 @@ namespace AhmadHRMSBackend.UnitofWork
     {
         IEmployeeList EmployeeList { get; }
 
-
+        IAttendance Attendance { get; }
 
 
 

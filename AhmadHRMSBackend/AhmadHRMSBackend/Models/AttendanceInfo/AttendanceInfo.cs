@@ -12,13 +12,13 @@ namespace AhmadHRMSBackend.Models.AttendanceInfo
 
         [Required]
         [StringLength(200)]
-        public string CheckInTime { get; set; }
+        public DateTime CheckInTime { get; set; }
         [Required]
         [StringLength(200)]
-        public string CheckOutTime { get; set; }
+        public DateTime CheckOutTime { get; set; }
         [Required]
         [StringLength(200)]
-        public string TotalHours { get; set; }
+        public TimeSpan TotalHours => CheckOutTime - CheckInTime;
         [Required]
         [StringLength(200)]
         public string Status { get; set; }
