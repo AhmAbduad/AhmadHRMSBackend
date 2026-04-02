@@ -12,10 +12,6 @@ namespace AhmadHRMSBackend.Models.Departments
         [Key]
         public int DepartmentsID { get; set; }
 
-        
-
-
-
         [Required]
         [StringLength(200)]
         public string Value { get; set; }
@@ -24,6 +20,8 @@ namespace AhmadHRMSBackend.Models.Departments
         [Required]
         [StringLength(200)]
         public string Label { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
 
 
         public ICollection<EmployeeList.EmployeeList> EmployeeList { get; set; } = new List<EmployeeList.EmployeeList>();

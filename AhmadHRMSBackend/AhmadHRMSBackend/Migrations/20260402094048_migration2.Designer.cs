@@ -4,6 +4,7 @@ using AhmadHRMSBackend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AhmadHRMSBackend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260402094048_migration2")]
+    partial class migration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,8 +43,8 @@ namespace AhmadHRMSBackend.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsDeleted")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -80,8 +83,8 @@ namespace AhmadHRMSBackend.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsDeleted")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -109,8 +112,8 @@ namespace AhmadHRMSBackend.Migrations
                     b.Property<int>("Absent")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsDeleted")
+                        .HasColumnType("int");
 
                     b.Property<int>("Late")
                         .HasColumnType("int");
@@ -134,8 +137,8 @@ namespace AhmadHRMSBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentsID"));
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsDeleted")
+                        .HasColumnType("int");
 
                     b.Property<string>("Label")
                         .IsRequired()
@@ -168,8 +171,8 @@ namespace AhmadHRMSBackend.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsDeleted")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("JoinDate")
                         .HasColumnType("datetime2");
@@ -208,8 +211,8 @@ namespace AhmadHRMSBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PositionID"));
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsDeleted")
+                        .HasColumnType("int");
 
                     b.Property<string>("PositionName")
                         .IsRequired()
@@ -229,8 +232,8 @@ namespace AhmadHRMSBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusID"));
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsDeleted")
+                        .HasColumnType("int");
 
                     b.Property<string>("StatusName")
                         .IsRequired()

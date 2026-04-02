@@ -42,6 +42,11 @@ namespace AhmadHRMSBackend.Models.EmployeeList
 
 
 
+        public bool IsDeleted { get; set; } = false;
+
+
+
+
         // 🔗 Navigation Property
         [ForeignKey(nameof(DepartmentID))]
         public Departments.Departments Departments { get; set; }
@@ -55,5 +60,8 @@ namespace AhmadHRMSBackend.Models.EmployeeList
 
         [ForeignKey(nameof(StatusID))]
         public Status.Status Status { get; set; }
+
+
+        public ICollection<AttendanceRecord.AttendanceRecord> AttendanceRecords { get; set; } = new List<AttendanceRecord.AttendanceRecord>();
     }
 }

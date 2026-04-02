@@ -16,6 +16,7 @@ namespace AhmadHRMSBackend.Models.Position
         [StringLength(50)]
         public string PositionName {  get; set; }
 
+        public bool IsDeleted { get; set; } = false;
 
 
         public ICollection<EmployeeList.EmployeeList> EmployeeList { get; set; } = new List<EmployeeList.EmployeeList>();

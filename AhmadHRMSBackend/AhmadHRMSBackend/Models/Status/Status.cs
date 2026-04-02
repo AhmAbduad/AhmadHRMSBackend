@@ -14,6 +14,9 @@ namespace AhmadHRMSBackend.Models.Status
         public string StatusName { get; set; }
 
 
+
+        public bool IsDeleted { get; set; } = false;
+
         public ICollection<EmployeeList.EmployeeList> EmployeeList { get; set; } = new List<EmployeeList.EmployeeList>();
     }
 }

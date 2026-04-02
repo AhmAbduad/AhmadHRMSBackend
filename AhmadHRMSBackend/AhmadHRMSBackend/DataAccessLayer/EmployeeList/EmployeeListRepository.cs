@@ -16,25 +16,32 @@ namespace AhmadHRMSBackend.DataAccessLayer.EmployeeList
         public async Task<List<AhmadHRMSBackend.Models.EmployeeList.EmployeeList>> GetAllEmployees()
         {
             return await _context.EmployeeList
-              .Include(e => e.Departments)
-              .Include(e => e.Position)
-              .Include(e => e.Status)
-              .ToListAsync();
+             .Where(e => !e.IsDeleted) // 🔹 Only non-deleted records
+             .Include(e => e.Departments)
+             .Include(e => e.Position)
+             .Include(e => e.Status)
+             .ToListAsync();
         }
 
         public async Task<List<AhmadHRMSBackend.Models.Departments.Departments>> GetAllDepartments()
         {
-            return await _context.Departments.ToListAsync();
+            return await _context.Departments
+            .Where(d => !d.IsDeleted) // 🔹 Only non-deleted departments
+            .ToListAsync();
         }
 
         public async Task<List<AhmadHRMSBackend.Models.Position.Position>> GetAllPosition()
         {
-            return await _context.Position.ToListAsync();
+            return await _context.Position
+            .Where(p => !p.IsDeleted) // 🔹 Only non-deleted positions
+            .ToListAsync();
         }
 
         public async Task<List<AhmadHRMSBackend.Models.Status.Status>> GetAllStatus()
         {
-            return await _context.Status.ToListAsync();
+            return await _context.Status
+            .Where(s => !s.IsDeleted) // 🔹 Only non-deleted statuses
+            .ToListAsync();
         }
 
         public async Task<AhmadHRMSBackend.Models.EmployeeList.EmployeeList> CreateEmployee(string Email, string Name, int DepartmentId, int PositionId, int StatusId, DateTime JoinDate, string Avatar)
@@ -48,7 +55,10 @@ namespace AhmadHRMSBackend.DataAccessLayer.EmployeeList
                 StatusID = StatusId,
                 avatar = Avatar,
                 JoinDate = JoinDate,
+                IsDeleted=false
             };
+
+
 
             _context.EmployeeList.Add(request);
 
@@ -83,16 +93,20 @@ namespace AhmadHRMSBackend.DataAccessLayer.EmployeeList
         public async Task<bool> DeleteEmployee(int id)
         {
             var employee = await _context.EmployeeList
-                .FirstOrDefaultAsync(e => e.EmployeeID == id);
+        .FirstOrDefaultAsync(e => e.EmployeeID == id);
 
             if (employee == null)
             {
                 return false; // Employee not found
             }
 
-            _context.EmployeeList.Remove(employee);
+            // 🔹 Soft Delete instead of Remove
+            employee.IsDeleted = true;
 
-            return true; // Successfully deleted
+            // Optional: updated date bhi rakh sakte ho
+            // employee.UpdatedAt = DateTime.UtcNow;
+
+            return true; // Successfully marked as deleted
         }
     }
 }
