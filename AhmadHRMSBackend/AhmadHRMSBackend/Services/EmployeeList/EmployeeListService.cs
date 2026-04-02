@@ -136,6 +136,26 @@ namespace AhmadHRMSBackend.Services.EmployeeList
 
         }
 
+        public async Task<bool> DeleteEmployee(int id)
+        {
+            await _unitOfWork.BeginTransactionAsync();
+            try{
+                var request =await _unitOfWork.EmployeeList.DeleteEmployee(id);
+
+                await _unitOfWork.SaveChangesAsync();
+
+                // 🔹 Commit transaction
+                await _unitOfWork.CommitTransactionAsync();
+
+                return request;
+            }
+            catch 
+            {
+                await _unitOfWork.RollbackTransactionAsync();
+                throw; // Bubble up the exception
+            }
+        }
+
 
     }
 }

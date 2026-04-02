@@ -70,5 +70,13 @@ namespace AhmadHRMSBackend.Controllers
             return Ok(result);  
         }
 
+        [HttpDelete("DeleteEmployee/{id}")]
+        public async Task<IActionResult> DeleteEmployee(int id)
+        {
+            var result = await _service.DeleteEmployee(id);
+
+            return Ok(result);
+        }
+
     }
 }

@@ -13,5 +13,7 @@
         Task<AhmadHRMSBackend.Models.EmployeeList.EmployeeList> CreateEmployee( string Email, string Name, int DepartmentId, int PositionId, int StatusId, DateTime JoinDate, string Avatar);
 
         Task<AhmadHRMSBackend.Models.EmployeeList.EmployeeList> UpdateEmployee(int Id,string Email, string Name, int DepartmentId, int PositionId, int StatusId, DateTime JoinDate, string Avatar);
+
+        Task<bool> DeleteEmployee (int Id);
     }
 }

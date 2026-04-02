@@ -79,5 +79,20 @@ namespace AhmadHRMSBackend.DataAccessLayer.EmployeeList
 
             return employee;
         }
+
+        public async Task<bool> DeleteEmployee(int id)
+        {
+            var employee = await _context.EmployeeList
+                .FirstOrDefaultAsync(e => e.EmployeeID == id);
+
+            if (employee == null)
+            {
+                return false; // Employee not found
+            }
+
+            _context.EmployeeList.Remove(employee);
+
+            return true; // Successfully deleted
+        }
     }
 }
