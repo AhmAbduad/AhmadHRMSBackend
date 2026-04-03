@@ -1,5 +1,6 @@
 ﻿using AhmadHRMSBackend.dto.EmployeeList;
 using AhmadHRMSBackend.dto.GetAttendanceInfo;
+using AhmadHRMSBackend.dto.GetAttendanceRecord;
 using AhmadHRMSBackend.UnitofWork;
 
 namespace AhmadHRMSBackend.Services.Attendance
@@ -27,6 +28,27 @@ namespace AhmadHRMSBackend.Services.Attendance
                 CheckOutTime = e.CheckOutTime,
                 Status = e.Status
             };
+        }
+
+
+        public async Task<List<GetAttendanceRecordDto>> GetAttendanceRecord()
+        {
+            var attendancerecord = await _unitOfWork.Attendance.GetAttendanceRecord();
+
+            if (attendancerecord == null)
+                return null;
+
+            return attendancerecord.Select(e => new GetAttendanceRecordDto
+            {
+                Id = e.EmployeeId,
+                EmployeeName = e.Employee.Name,
+                Department = e.Employee.Departments.Label,
+                Date = e.Date,
+                CheckIn = e.CheckIn, 
+                CheckOut = e.CheckOut,
+                Status = e.Status,
+                Avatar = e.Employee.avatar
+            }).ToList();
         }
     }
 }

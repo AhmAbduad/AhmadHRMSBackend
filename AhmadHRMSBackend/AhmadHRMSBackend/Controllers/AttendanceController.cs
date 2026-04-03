@@ -19,9 +19,18 @@ namespace AhmadHRMSBackend.Controllers
         [HttpGet("GetAttendanceInfo")]
         public async Task<IActionResult> GetAttendanceInfo()
         {
-            var employees = await _service.GetAttendanceInfo();
+            var attendanceinfo = await _service.GetAttendanceInfo();
 
-            return Ok(employees);
+            return Ok(attendanceinfo);
+        }
+
+
+        [HttpGet("GetAttendanceRecord")]
+        public async Task<IActionResult> GetAttendanceRecord()
+        {
+            var attendancerecord = await _service.GetAttendanceRecord();
+
+            return Ok(attendancerecord);
         }
     }
 }
