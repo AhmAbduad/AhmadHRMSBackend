@@ -25,11 +25,21 @@ namespace AhmadHRMSBackend.DataAccessLayer.Attendance
         public async Task<List<AhmadHRMSBackend.Models.AttendanceRecord.AttendanceRecord>> GetAttendanceRecord()
         {
              return await _context.AttendanceRecords
-            .Include(a => a.Employee) // 🔹 Join with Employee table
-            .ThenInclude(e => e.Departments) 
-            .Where(a => !a.IsDeleted)
-            .OrderByDescending(a => a.Date)
-            .ToListAsync();
+                .Include(a => a.Employee) // 🔹 Join with Employee table
+                .ThenInclude(e => e.Departments) 
+                .Where(a => !a.IsDeleted)
+                .OrderByDescending(a => a.Date)
+                .ToListAsync();
+        }
+
+        public async Task<AhmadHRMSBackend.Models.AttendanceSummary.AttendanceSummary> GetAttendanceSummary(int id)
+        {
+            return await _context.AttendanceSummary
+            .Include(a => a.Employee) // 🔹 Optional (agar employee data bhi chahiye)
+            .Where(a => a.EmployeeId == id && !a.IsDeleted)
+            .OrderByDescending(a => a.Year)
+            .ThenByDescending(a => a.Month) // 🔹 Latest month first
+            .FirstOrDefaultAsync();
         }
     }
 }

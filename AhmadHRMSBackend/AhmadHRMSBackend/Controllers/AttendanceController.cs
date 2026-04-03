@@ -32,5 +32,13 @@ namespace AhmadHRMSBackend.Controllers
 
             return Ok(attendancerecord);
         }
+
+
+        [HttpGet("GetAttendanceSummary/{id}")]
+        public async Task<IActionResult> GetAttendanceSummary(int id)
+        {
+            var attendancesummary = await _service.GetAttendanceSummary(id);
+            return Ok(attendancesummary);   
+        }
     }
 }
