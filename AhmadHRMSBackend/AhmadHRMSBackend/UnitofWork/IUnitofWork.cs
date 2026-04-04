@@ -8,7 +8,7 @@ namespace AhmadHRMSBackend.UnitofWork
 
         IAttendance Attendance { get; }
 
-
+        IMarkAttendance MarkAttendance { get; }
 
         Task<int> SaveChangesAsync();
         Task BeginTransactionAsync();

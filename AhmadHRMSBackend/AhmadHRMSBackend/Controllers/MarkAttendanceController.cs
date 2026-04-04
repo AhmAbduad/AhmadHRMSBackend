@@ -1,0 +1,29 @@
+﻿using AhmadHRMSBackend.dto.GetMarkAttendance;
+using AhmadHRMSBackend.Services.EmployeeList;
+using AhmadHRMSBackend.Services.MarkAttendance;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace AhmadHRMSBackend.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MarkAttendanceController : ControllerBase
+    {
+        public readonly MarkAttendanceService _service;
+
+        public MarkAttendanceController(MarkAttendanceService service)
+        {
+            _service = service;
+        }
+
+
+        [HttpGet("GetMarkAttendanceRecord")]
+        public async Task<IActionResult> GetMarkAttendanceRecord([FromQuery] GetMarkAttendanceDto dto)
+        {
+            var markattendancerecord = await _service.GetMarkAttendanceRecord(dto);
+
+            return Ok(markattendancerecord);
+        }
+    }
+}
