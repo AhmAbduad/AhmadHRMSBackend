@@ -1,5 +1,7 @@
-﻿using AhmadHRMSBackend.dto.GetAttendanceRecord;
+﻿using AhmadHRMSBackend.dto.Department;
+using AhmadHRMSBackend.dto.GetAttendanceRecord;
 using AhmadHRMSBackend.dto.GetMarkAttendance;
+using AhmadHRMSBackend.Models.Departments;
 using AhmadHRMSBackend.UnitofWork;
 
 namespace AhmadHRMSBackend.Services.MarkAttendance
@@ -30,6 +32,21 @@ namespace AhmadHRMSBackend.Services.MarkAttendance
                 CheckOut = e.CheckOut,
                 Status = e.Status,
                 Avatar = e.Employee.avatar
+            }).ToList();
+        }
+
+        public async Task<List<DepartmentDto>> GetDepartments()
+        {
+            var departments = await _unitOfWork.MarkAttendance.GetDepartments();
+
+            if (departments == null)
+                return null;
+
+            return departments.Select(e => new DepartmentDto
+            {
+                id = e.DepartmentsID,
+                Value = e.Value,
+                Label = e.Label
             }).ToList();
         }
     }

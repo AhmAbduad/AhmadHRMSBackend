@@ -25,5 +25,13 @@ namespace AhmadHRMSBackend.DataAccessLayer.MarkAttendance
              .OrderByDescending(a => a.Date)
              .ToListAsync();
         }
+
+        public async Task<List<AhmadHRMSBackend.Models.Departments.Departments>> GetDepartments()
+        {
+            return await _context.Departments
+           .Where(d => !d.IsDeleted) // 🔹 Only non-deleted departments
+           .ToListAsync();
+        }
+
     }
 }

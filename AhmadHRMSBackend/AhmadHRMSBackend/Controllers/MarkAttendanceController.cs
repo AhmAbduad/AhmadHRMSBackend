@@ -25,5 +25,12 @@ namespace AhmadHRMSBackend.Controllers
 
             return Ok(markattendancerecord);
         }
+
+        [HttpGet("GetDepartments")]
+        public async Task<IActionResult> GetDepartments()
+        {
+            var departments = await _service.GetDepartments();
+            return Ok(departments);
+        }
     }
 }

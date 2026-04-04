@@ -37,9 +37,9 @@ namespace AhmadHRMSBackend.Services.EmployeeList
 
         public async Task<List<DepartmentDto>> GetAllDepartments()
         {
-            var departmemnts = await _unitOfWork.EmployeeList.GetAllDepartments();
+            var departments = await _unitOfWork.EmployeeList.GetAllDepartments();
 
-            return departmemnts.Select(e => new DepartmentDto
+            return departments.Select(e => new DepartmentDto
             {
                 id = e.DepartmentsID,
                 Value = e.Value,
