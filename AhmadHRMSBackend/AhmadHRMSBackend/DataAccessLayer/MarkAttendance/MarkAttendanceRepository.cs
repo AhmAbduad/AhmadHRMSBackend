@@ -20,9 +20,14 @@ namespace AhmadHRMSBackend.DataAccessLayer.MarkAttendance
         public async Task<List<GetAttendanceRecordDto>> GetMarkAttendanceRecord(DateTime date, int departmentId)
         {
             var employees = await _context.EmployeeList
-                    .Include(e => e.Departments) // ✅ FIX
-                    .Where(e => !e.IsDeleted && e.DepartmentID == departmentId)
-                    .ToListAsync();
+                .Include(e => e.Departments)
+                .Include(e => e.Status) // 🔥 IMPORTANT
+                .Where(e =>
+                    !e.IsDeleted &&
+                    e.DepartmentID == departmentId &&
+                    e.Status.StatusName != "Inactive"   // ✅ filter
+                )
+                .ToListAsync();
 
             var attendance = await _context.AttendanceRecords
                 .Where(a => a.Date.Date == date.Date)
