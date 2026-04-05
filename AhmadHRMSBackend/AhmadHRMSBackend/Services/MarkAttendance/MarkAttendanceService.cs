@@ -1,6 +1,7 @@
 ﻿using AhmadHRMSBackend.dto.Department;
 using AhmadHRMSBackend.dto.GetAttendanceRecord;
 using AhmadHRMSBackend.dto.GetMarkAttendance;
+using AhmadHRMSBackend.dto.SaveAttendance;
 using AhmadHRMSBackend.Models.Departments;
 using AhmadHRMSBackend.UnitofWork;
 
@@ -22,17 +23,19 @@ namespace AhmadHRMSBackend.Services.MarkAttendance
             if (markattendancerecord == null)
                 return null;
 
-            return markattendancerecord.Select(e => new GetAttendanceRecordDto
-            {
-                EmployeeId = e.EmployeeId,
-                EmployeeName = e.Employee.Name,
-                Department = e.Employee.Departments.Label,
-                Date = e.Date,
-                CheckIn = e.CheckIn,
-                CheckOut = e.CheckOut,
-                Status = e.Status,
-                Avatar = e.Employee.avatar
-            }).ToList();
+            //return markattendancerecord.Select(e => new GetAttendanceRecordDto
+            //{
+            //    EmployeeId = e.EmployeeId,
+            //    EmployeeName = e.Employee.Name,
+            //    Department = e.Employee.Departments.Label,
+            //    Date = e.Date,
+            //    CheckIn = e.CheckIn,
+            //    CheckOut = e.CheckOut,
+            //    Status = e.Status,
+            //    Avatar = e.Employee.avatar
+            //}).ToList();
+
+            return markattendancerecord;
         }
 
         public async Task<List<DepartmentDto>> GetDepartments()
@@ -48,6 +51,17 @@ namespace AhmadHRMSBackend.Services.MarkAttendance
                 Value = e.Value,
                 Label = e.Label
             }).ToList();
+        }
+
+        public async Task<bool> SaveMarkAttendance(SaveAttendanceDto dto)
+        {
+            var markattendance = await _unitOfWork.MarkAttendance.SaveMarkAttendance(dto);
+            if (markattendance == true)
+                return true;
+            else
+            {
+                return false;
+            }
         }
     }
 }

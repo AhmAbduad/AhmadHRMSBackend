@@ -1,4 +1,5 @@
 ﻿using AhmadHRMSBackend.dto.GetMarkAttendance;
+using AhmadHRMSBackend.dto.SaveAttendance;
 using AhmadHRMSBackend.Services.EmployeeList;
 using AhmadHRMSBackend.Services.MarkAttendance;
 using Microsoft.AspNetCore.Http;
@@ -32,5 +33,14 @@ namespace AhmadHRMSBackend.Controllers
             var departments = await _service.GetDepartments();
             return Ok(departments);
         }
+
+        [HttpPost("SaveMarkAttendance")]
+        public async Task<IActionResult> SaveMarkAttendance([FromBody] SaveAttendanceDto dto)
+        {
+            var savemarkattendance = await _service.SaveMarkAttendance(dto);
+
+            return Ok(savemarkattendance);
+        }
+
     }
 }

@@ -11,6 +11,7 @@ namespace AhmadHRMSBackend.Models.Status
 
 
         [Required]
+        [StringLength(200)]
         public string StatusName { get; set; }
 
 

@@ -19,14 +19,13 @@ namespace AhmadHRMSBackend.Models.AttendanceRecord
         public DateTime Date { get; set; }
 
         // ✅ Proper Time Fields
-        [Required]
-        public DateTime CheckIn { get; set; }
+        public DateTime? CheckIn { get; set; }
 
-        [Required]
-        public DateTime CheckOut { get; set; }
+       
+        public DateTime? CheckOut { get; set; }
 
-        [Required]
-        public TimeSpan TotalHours => CheckOut - CheckIn;
+     
+        public TimeSpan? TotalHours => CheckOut - CheckIn;
 
         [Required]
         public string Status { get; set; }
