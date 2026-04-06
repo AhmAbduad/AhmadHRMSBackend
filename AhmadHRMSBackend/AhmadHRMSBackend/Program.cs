@@ -1,10 +1,12 @@
 using AhmadHRMSBackend.Data;
 using AhmadHRMSBackend.DataAccessLayer.Attendance;
 using AhmadHRMSBackend.DataAccessLayer.EmployeeList;
+using AhmadHRMSBackend.DataAccessLayer.Leave;
 using AhmadHRMSBackend.DataAccessLayer.MarkAttendance;
 using AhmadHRMSBackend.Interfaces;
 using AhmadHRMSBackend.Services.Attendance;
 using AhmadHRMSBackend.Services.EmployeeList;
+using AhmadHRMSBackend.Services.Leave;
 using AhmadHRMSBackend.Services.MarkAttendance;
 using AhmadHRMSBackend.UnitofWork;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,9 @@ builder.Services.AddScoped<IAttendance, AttendanceRepository>();
 builder.Services.AddScoped<AttendanceService>();
 builder.Services.AddScoped<IMarkAttendance, MarkAttendanceRepository>();
 builder.Services.AddScoped<MarkAttendanceService>();
+builder.Services.AddScoped<ILeave, LeaveRepository>();
+builder.Services.AddScoped<LeaveService>();
+
 
 
 builder.Services.AddScoped<IUnitofWork, UnitofWork>();

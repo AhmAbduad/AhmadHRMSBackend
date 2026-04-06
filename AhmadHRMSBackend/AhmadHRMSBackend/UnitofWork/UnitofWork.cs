@@ -17,17 +17,21 @@ namespace AhmadHRMSBackend.UnitofWork
 
         public IMarkAttendance MarkAttendance { get; }
 
+        public ILeave Leave { get; }
+
         // this is unit of work constructor
         public UnitofWork(
                         AppDbContext context,
                         IEmployeeList employeeList,
                         IAttendance attendance,
-                        IMarkAttendance markAttendance)
+                        IMarkAttendance markAttendance,
+                        ILeave leave)
         {
             _context = context;
             EmployeeList = employeeList;
             Attendance = attendance;
             MarkAttendance = markAttendance;
+            Leave = leave;
         }
 
 

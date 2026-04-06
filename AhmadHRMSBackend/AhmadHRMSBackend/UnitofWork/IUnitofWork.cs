@@ -10,6 +10,10 @@ namespace AhmadHRMSBackend.UnitofWork
 
         IMarkAttendance MarkAttendance { get; }
 
+        ILeave Leave { get; }
+
+
+
         Task<int> SaveChangesAsync();
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();

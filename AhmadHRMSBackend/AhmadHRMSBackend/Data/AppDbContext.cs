@@ -3,6 +3,9 @@ using AhmadHRMSBackend.Models.AttendanceRecord;
 using AhmadHRMSBackend.Models.AttendanceSummary;
 using AhmadHRMSBackend.Models.Departments;
 using AhmadHRMSBackend.Models.EmployeeList;
+using AhmadHRMSBackend.Models.LeaveRequests;
+using AhmadHRMSBackend.Models.LeaveStatus;
+using AhmadHRMSBackend.Models.LeaveTypes;
 using AhmadHRMSBackend.Models.Position;
 using AhmadHRMSBackend.Models.Status;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +32,12 @@ namespace AhmadHRMSBackend.Data
         public DbSet<AttendanceSummary> AttendanceSummary { get; set; }
 
         public DbSet<AttendanceInfo> AttendanceInfo { get; set; }
+
+        public DbSet<LeaveRequests> LeaveRequests { get; set; }
+
+        public DbSet<LeaveTypes> LeaveTypes { get; set; }
+
+        public DbSet<LeaveStatus> LeaveStatus { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -74,6 +83,29 @@ namespace AhmadHRMSBackend.Data
                 .WithMany(p => p.AttendanceSummary)
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<LeaveRequests>()
+                .HasOne(e=>e.Employee)
+                .WithMany(p=>p.LeaveRequests)
+                .HasForeignKey(e=>e.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            // LeaveType → LeaveRequest
+            modelBuilder.Entity<LeaveRequests>()
+                .HasOne(l => l.LeaveType)
+                .WithMany(t => t.LeaveRequests)
+                .HasForeignKey(l => l.LeaveTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // LeaveStatus → LeaveRequest
+            modelBuilder.Entity<LeaveRequests>()
+                .HasOne(l => l.LeaveStatus)
+                .WithMany(s => s.LeaveRequests)
+                .HasForeignKey(l => l.LeaveStatusId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
         }
     }
