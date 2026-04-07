@@ -25,26 +25,30 @@ namespace AhmadHRMSBackend.DataAccessLayer.Leave
         public async Task<List<LeaveRequestDto>> GetLeaveRequest()
         {
             var data = await _context.LeaveRequests
-            .Include(l => l.Employee)
-                .ThenInclude(e => e.Departments)
-            .Include(l => l.LeaveType)
-            .Include(l => l.LeaveStatus)
-            .Where(l => !l.IsDeleted)
-            .Select(l => new LeaveRequestDto
-            {
-                id = l.LeaveRequestsID,
-                employee = l.Employee.Name,
-                department = l.Employee.Departments.Label,
-                leaveType = l.LeaveType.LeaveTypeName,
-                startDate = l.StartDate,
-                endDate = l.EndDate,
-                days = l.Days,
-                reason = l.Reason,
-                status = l.LeaveStatus.StatusName,
-                appliedDate = l.AppliedDate,
-                avatar = l.Employee.avatar
-            })
-            .ToListAsync();
+                .Include(l => l.Employee)
+                    .ThenInclude(e => e.Departments)
+                .Include(l => l.Employee)
+                    .ThenInclude(e => e.Status) // ✅ IMPORTANT
+                .Include(l => l.LeaveType)
+                .Include(l => l.LeaveStatus)
+                .Where(l => !l.IsDeleted
+                    && !l.Employee.IsDeleted
+                    && l.Employee.Status.StatusName != "Inactive") // ✅ FILTER
+                .Select(l => new LeaveRequestDto
+                {
+                    id = l.LeaveRequestsID,
+                    employee = l.Employee.Name,
+                    department = l.Employee.Departments.Label,
+                    leaveType = l.LeaveType.LeaveTypeName,
+                    startDate = l.StartDate,
+                    endDate = l.EndDate,
+                    days = l.Days,
+                    reason = l.Reason,
+                    status = l.LeaveStatus.StatusName,
+                    appliedDate = l.AppliedDate,
+                    avatar = l.Employee.avatar
+                })
+                .ToListAsync();
 
             return data;
         }
