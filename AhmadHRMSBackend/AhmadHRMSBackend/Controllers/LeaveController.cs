@@ -1,4 +1,7 @@
-﻿using AhmadHRMSBackend.Services.Leave;
+﻿using AhmadHRMSBackend.dto.ChangeStatus;
+using AhmadHRMSBackend.dto.SaveAttendance;
+using AhmadHRMSBackend.dto.SubmitLeaveRequest;
+using AhmadHRMSBackend.Services.Leave;
 using AhmadHRMSBackend.Services.MarkAttendance;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +40,42 @@ namespace AhmadHRMSBackend.Controllers
         {
             var status = await _service.GetStatusForLeave();
             return Ok(status);
+        }
+
+        [HttpGet("GetLeaveStats")]
+        public async Task<IActionResult> GetLeaveStats()
+        {
+            var leavestats = await _service.GetLeaveStats();
+            return Ok(leavestats);
+        }
+
+        [HttpGet("GetLeaveTypes")]
+        public async Task<IActionResult> GetLeaveTypes()
+        {
+            var leavetypes = await _service.GetLeaveTypes();
+            return Ok(leavetypes);
+        }
+
+        [HttpPost("SubmitLeaveRequest")]
+        public async Task<IActionResult> SubmitLeaveRequest([FromBody] SubmitLeaveRequestDto dto)
+        {
+            var result = await _service.SubmitLeaveRequest(dto);
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetEmployeesForLeave")]
+        public async Task<IActionResult> GetEmployeesForLeave()
+        {
+            var result = await _service.GetEmployeesForLeave();
+            return Ok(result);
+        }
+
+        [HttpPost("ChangeLeaveRequestStatus")]
+        public async Task<IActionResult> ChangeLeaveRequestStatus([FromBody] ChangeStatusDto dto)
+        {
+            var changestatus = await _service.ChangeLeaveRequestStatus(dto);
+            return Ok(changestatus);
         }
     }
 }
