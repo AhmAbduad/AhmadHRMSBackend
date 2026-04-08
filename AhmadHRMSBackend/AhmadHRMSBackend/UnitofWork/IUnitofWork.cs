@@ -12,6 +12,7 @@ namespace AhmadHRMSBackend.UnitofWork
 
         ILeave Leave { get; }
 
+        ITimeSheet TimeSheet { get; }
 
 
         Task<int> SaveChangesAsync();

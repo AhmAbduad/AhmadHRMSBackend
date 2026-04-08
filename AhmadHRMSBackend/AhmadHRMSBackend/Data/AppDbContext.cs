@@ -8,6 +8,8 @@ using AhmadHRMSBackend.Models.LeaveStatus;
 using AhmadHRMSBackend.Models.LeaveTypes;
 using AhmadHRMSBackend.Models.Position;
 using AhmadHRMSBackend.Models.Status;
+using AhmadHRMSBackend.Models.TimesheetDetails;
+using AhmadHRMSBackend.Models.Timesheets;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
 
@@ -38,6 +40,10 @@ namespace AhmadHRMSBackend.Data
         public DbSet<LeaveTypes> LeaveTypes { get; set; }
 
         public DbSet<LeaveStatus> LeaveStatus { get; set; }
+
+        public DbSet<TimesheetDetails> TimesheetDetails { get; set; }
+
+        public DbSet<Timesheets> Timesheets { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -107,6 +113,29 @@ namespace AhmadHRMSBackend.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
 
+            modelBuilder.Entity<Timesheets>()
+                .HasOne(l=>l.Employee)
+                .WithMany(s=>s.Timesheets)
+                .HasForeignKey(l=>l.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TimesheetDetails>()
+                .HasOne(l=>l.Timesheet)
+                .WithMany(s=>s.TimesheetDetails)
+                .HasForeignKey(l=>l.TimesheetId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Timesheets>()
+                .Property(t => t.TotalHours)
+                .HasPrecision(10, 2);
+
+            modelBuilder.Entity<Timesheets>()
+                .Property(t => t.RegularHours)
+                .HasPrecision(10, 2);
+
+            modelBuilder.Entity<Timesheets>()
+                .Property(t => t.OvertimeHours)
+                .HasPrecision(10, 2);
         }
     }
 }

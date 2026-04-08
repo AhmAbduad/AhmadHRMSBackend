@@ -2,6 +2,7 @@
 using AhmadHRMSBackend.Models.Departments;
 using AhmadHRMSBackend.Models.LeaveRequests;
 using AhmadHRMSBackend.Models.Position;
+using AhmadHRMSBackend.Models.Timesheets;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.Mail;
@@ -70,5 +71,8 @@ namespace AhmadHRMSBackend.Models.EmployeeList
 
 
         public ICollection<LeaveRequests.LeaveRequests> LeaveRequests { get; set; }= new List<LeaveRequests.LeaveRequests>();
+
+
+        public ICollection<Timesheets.Timesheets> Timesheets { get; set; } = new List<Timesheets.Timesheets>();
     }
 }
