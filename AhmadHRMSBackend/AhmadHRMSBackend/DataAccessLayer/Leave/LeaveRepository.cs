@@ -7,6 +7,7 @@ using AhmadHRMSBackend.dto.LeaveStats;
 using AhmadHRMSBackend.dto.LeaveTypes;
 using AhmadHRMSBackend.dto.SubmitLeaveRequest;
 using AhmadHRMSBackend.Interfaces;
+using AhmadHRMSBackend.Models.AttendanceRecord;
 using AhmadHRMSBackend.Models.LeaveRequests;
 using Microsoft.EntityFrameworkCore;
 
@@ -172,10 +173,30 @@ namespace AhmadHRMSBackend.DataAccessLayer.Leave
 
         public async Task<bool> ChangeLeaveRequestStatus(ChangeStatusDto dto)
         {
+            //if (dto == null)
+            //    return false;
+
+            //// ✅ Get leave request
+            //var leaveRequest = await _context.LeaveRequests
+            //    .FirstOrDefaultAsync(l =>
+            //        l.LeaveRequestsID == dto.LeaveRequestId
+            //        && !l.IsDeleted);
+
+            //if (leaveRequest == null)
+            //    return false;
+
+            //// ✅ Update status
+            //leaveRequest.LeaveStatusId = dto.statusID;
+
+            //_context.LeaveRequests.Update(leaveRequest);
+            //await _context.SaveChangesAsync();
+
+            //return true;
+
+
             if (dto == null)
                 return false;
 
-            // ✅ Get leave request
             var leaveRequest = await _context.LeaveRequests
                 .FirstOrDefaultAsync(l =>
                     l.LeaveRequestsID == dto.LeaveRequestId
@@ -184,10 +205,48 @@ namespace AhmadHRMSBackend.DataAccessLayer.Leave
             if (leaveRequest == null)
                 return false;
 
-            // ✅ Update status
+            // ✅ Update Leave Status
             leaveRequest.LeaveStatusId = dto.statusID;
 
-            _context.LeaveRequests.Update(leaveRequest);
+            // 🔥 ONLY when Approved
+            if (dto.statusID == 2)
+            {
+                var start = leaveRequest.StartDate.Date;
+                var end = leaveRequest.EndDate.Date;
+
+                for (var date = start; date <= end; date = date.AddDays(1))
+                {
+                    var existingRecord = await _context.AttendanceRecords
+                        .FirstOrDefaultAsync(a =>
+                            a.EmployeeId == leaveRequest.EmployeeId
+                            && a.Date.Date == date
+                            && !a.IsDeleted);
+
+                    if (existingRecord != null)
+                    {
+                        // ✅ Update existing record
+                        existingRecord.Status = "leave";
+                        existingRecord.CheckIn = null;
+                        existingRecord.CheckOut = null;
+                    }
+                    else
+                    {
+                        // ✅ Create new record
+                        var newRecord = new AttendanceRecord
+                        {
+                            EmployeeId = leaveRequest.EmployeeId,
+                            Date = date,
+                            Status = "leave",
+                            CheckIn = null,
+                            CheckOut = null,
+                            IsDeleted = false
+                        };
+
+                        await _context.AttendanceRecords.AddAsync(newRecord);
+                    }
+                }
+            }
+
             await _context.SaveChangesAsync();
 
             return true;
