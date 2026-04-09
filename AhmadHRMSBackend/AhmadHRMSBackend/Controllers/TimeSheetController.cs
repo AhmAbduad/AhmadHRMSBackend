@@ -19,12 +19,26 @@ namespace AhmadHRMSBackend.Controllers
         }
 
 
-        [HttpGet("GetTimeSheetDetail")]
-        public async Task<IActionResult> GetTimeSheetDetail([FromQuery] GetTimesheetDto dto)
+        [HttpPost("GetTimeSheetDetail")]
+        public async Task<IActionResult> GetTimeSheetDetail([FromBody] GetTimesheetDto dto)
         {
             var result = await _service.GetTimeSheetDetail(dto);
 
             return Ok(result);
         }
+
+
+        [HttpGet("GetEmployeesForTimeSheet")]
+        public async Task<IActionResult> GetEmployeesForTimeSheet()
+        {
+            var result = await _service.GetEmployeesForTimeSheet();
+            return Ok(result);
+        }
+
+        //[HttpPost("SaveTimeSheet")]
+        //public async Task<IActionResult> SaveTimeSheet([FromBody] SaveTimeSheetDto dto)
+        //{
+
+        //}
     }
 }

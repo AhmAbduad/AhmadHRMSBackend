@@ -1,4 +1,5 @@
 ﻿using AhmadHRMSBackend.Data;
+using AhmadHRMSBackend.dto.LeaveEmployee;
 using AhmadHRMSBackend.dto.TimeSheetDetails;
 using AhmadHRMSBackend.Interfaces;
 using AhmadHRMSBackend.Models.TimesheetDetails;
@@ -30,8 +31,8 @@ namespace AhmadHRMSBackend.DataAccessLayer.TimeSheet
 
             // 🔥 Dynamic filters (IMPORTANT)
 
-            if (dto.TimesheetId.HasValue)
-                query = query.Where(t => t.TimesheetId == dto.TimesheetId.Value);
+            //if (dto.TimesheetId.HasValue)
+            //    query = query.Where(t => t.TimesheetId == dto.TimesheetId.Value);
 
             if (dto.EmployeeId.HasValue)
                 query = query.Where(t => t.EmployeeId == dto.EmployeeId.Value);
@@ -92,6 +93,20 @@ namespace AhmadHRMSBackend.DataAccessLayer.TimeSheet
             }).ToList();
 
             return result;
+        }
+
+        public async Task<List<LeaveEmployeeDto>> GetEmployeesForTimeSheet()
+        {
+            var employees = await _context.EmployeeList
+           .Where(e => !e.IsDeleted && e.Status.StatusName != "Inactive") // ✅ only active employees
+           .Select(e => new LeaveEmployeeDto
+           {
+               EmployeeID = e.EmployeeID,
+               EmployeeName = e.Name
+           })
+           .ToListAsync();
+
+            return employees;
         }
     }
 }
