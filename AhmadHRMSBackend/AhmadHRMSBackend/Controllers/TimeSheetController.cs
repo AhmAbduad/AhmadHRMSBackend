@@ -35,10 +35,11 @@ namespace AhmadHRMSBackend.Controllers
             return Ok(result);
         }
 
-        //[HttpPost("SaveTimeSheet")]
-        //public async Task<IActionResult> SaveTimeSheet([FromBody] SaveTimeSheetDto dto)
-        //{
-
-        //}
+        [HttpPost("SaveTimeSheet")]
+        public async Task<IActionResult> SaveTimeSheet([FromBody] SaveTimeSheetDto dto)
+        {
+            var result = await _service.SaveTimeSheet(dto);
+            return Ok(result);
+        }
     }
 }

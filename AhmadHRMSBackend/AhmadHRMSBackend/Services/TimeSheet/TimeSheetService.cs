@@ -26,5 +26,11 @@ namespace AhmadHRMSBackend.Services.TimeSheet
             var result = await _unitOfWork.TimeSheet.GetEmployeesForTimeSheet();
             return result;
         }
+
+        public async Task<bool> SaveTimeSheet(SaveTimeSheetDto dto)
+        {
+            var result = await _unitOfWork.TimeSheet.SaveTimeSheet(dto);
+            return result;
+        }
     }
 }

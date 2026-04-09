@@ -24,6 +24,9 @@ namespace AhmadHRMSBackend.Models.TimesheetDetails
 
         public int Minutes { get; set; }
 
+        public int Week { get; set; }
+
+
         [Required]
         [StringLength(20)]
         public string Status { get; set; } // regular, overtime, leave, off

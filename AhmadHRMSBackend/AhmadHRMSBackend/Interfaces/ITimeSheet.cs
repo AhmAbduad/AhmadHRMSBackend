@@ -8,5 +8,7 @@ namespace AhmadHRMSBackend.Interfaces
         Task<List<TimeSheetDetailsDto>> GetTimeSheetDetail(GetTimesheetDto dto);
 
         Task<List<LeaveEmployeeDto>> GetEmployeesForTimeSheet();
+
+        Task<bool> SaveTimeSheet(SaveTimeSheetDto dto);
     }
 }
