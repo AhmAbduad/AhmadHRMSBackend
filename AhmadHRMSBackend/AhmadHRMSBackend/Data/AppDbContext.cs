@@ -6,6 +6,8 @@ using AhmadHRMSBackend.Models.EmployeeList;
 using AhmadHRMSBackend.Models.LeaveRequests;
 using AhmadHRMSBackend.Models.LeaveStatus;
 using AhmadHRMSBackend.Models.LeaveTypes;
+using AhmadHRMSBackend.Models.PayrollRequests;
+using AhmadHRMSBackend.Models.PayrollStatus;
 using AhmadHRMSBackend.Models.Position;
 using AhmadHRMSBackend.Models.Status;
 using AhmadHRMSBackend.Models.TimesheetDetails;
@@ -44,6 +46,10 @@ namespace AhmadHRMSBackend.Data
         public DbSet<TimesheetDetails> TimesheetDetails { get; set; }
 
         public DbSet<Timesheets> Timesheets { get; set; }
+
+        public DbSet<PayrollRequests> PayrollRequests { get; set; }
+
+        public DbSet<PayrollStatus> PayrollStatus { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -136,6 +142,23 @@ namespace AhmadHRMSBackend.Data
             modelBuilder.Entity<Timesheets>()
                 .Property(t => t.OvertimeHours)
                 .HasPrecision(10, 2);
+
+            modelBuilder.Entity<PayrollRequests>()
+                .Property(p => p.Amount)
+                .HasPrecision(10, 2);
+
+            modelBuilder.Entity<PayrollRequests>()
+                .HasOne(l=>l.Employee)
+                .WithMany(s=>s.PayrollRequests)
+                .HasForeignKey(l=>l.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<PayrollRequests>()
+                .HasOne(l=>l.PayrollStatus)
+                .WithMany(s=>s.PayrollRequests)
+                .HasForeignKey(l=>l.StatusId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

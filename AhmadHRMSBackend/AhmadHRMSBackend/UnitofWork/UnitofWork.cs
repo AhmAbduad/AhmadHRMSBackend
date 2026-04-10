@@ -21,6 +21,8 @@ namespace AhmadHRMSBackend.UnitofWork
 
         public ILeave Leave { get; }
 
+        public IPayroll Payroll { get; }
+
         // this is unit of work constructor
         public UnitofWork(
                         AppDbContext context,
@@ -28,7 +30,7 @@ namespace AhmadHRMSBackend.UnitofWork
                         IAttendance attendance,
                         IMarkAttendance markAttendance,
                         ILeave leave,
-                        ITimeSheet timeSheet)
+                        ITimeSheet timeSheet,IPayroll payroll)
         {
             _context = context;
             EmployeeList = employeeList;
@@ -36,6 +38,7 @@ namespace AhmadHRMSBackend.UnitofWork
             MarkAttendance = markAttendance;
             Leave = leave;
             TimeSheet = timeSheet;
+            Payroll = payroll;
         }
 
 

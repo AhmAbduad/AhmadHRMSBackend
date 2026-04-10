@@ -14,6 +14,7 @@ namespace AhmadHRMSBackend.UnitofWork
 
         ITimeSheet TimeSheet { get; }
 
+        IPayroll Payroll { get; }
 
         Task<int> SaveChangesAsync();
         Task BeginTransactionAsync();

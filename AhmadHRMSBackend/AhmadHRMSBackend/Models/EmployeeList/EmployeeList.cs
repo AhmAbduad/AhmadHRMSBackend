@@ -1,6 +1,7 @@
 ﻿using AhmadHRMSBackend.Models.AttendanceSummary;
 using AhmadHRMSBackend.Models.Departments;
 using AhmadHRMSBackend.Models.LeaveRequests;
+using AhmadHRMSBackend.Models.PayrollRequests;
 using AhmadHRMSBackend.Models.Position;
 using AhmadHRMSBackend.Models.Timesheets;
 using System.ComponentModel.DataAnnotations;
@@ -74,5 +75,7 @@ namespace AhmadHRMSBackend.Models.EmployeeList
 
 
         public ICollection<Timesheets.Timesheets> Timesheets { get; set; } = new List<Timesheets.Timesheets>();
+
+        public ICollection<PayrollRequests.PayrollRequests> PayrollRequests { get; set; } = new List<PayrollRequests.PayrollRequests>();
     }
 }
