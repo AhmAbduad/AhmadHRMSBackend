@@ -52,5 +52,19 @@ namespace AhmadHRMSBackend.DataAccessLayer.Payroll
 
             return result;
         }
+
+        public async Task<List<GetPayrollStatusDto>> GetPayrollStatus()
+        {
+            var data = await _context.PayrollStatus
+            .Where(s => !s.IsDeleted)
+            .Select(s => new GetPayrollStatusDto
+            {
+                PayrollID = s.PayrollStatusId,
+                Label = s.Label
+            })
+            .ToListAsync();
+
+            return data;
+        }
     }
 }

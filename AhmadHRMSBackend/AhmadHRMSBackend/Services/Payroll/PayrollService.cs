@@ -17,5 +17,11 @@ namespace AhmadHRMSBackend.Services.Payroll
             var result = await _unitOfWork.Payroll.GetPayrollRequest(dto);
             return result;
         }
+
+        public async Task<List<GetPayrollStatusDto>> GetPayrollStatus()
+        {
+            var result = await _unitOfWork.Payroll.GetPayrollStatus();
+            return result;
+        }
     }
 }

@@ -24,5 +24,12 @@ namespace AhmadHRMSBackend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetPayrollStatus")]
+        public async Task<IActionResult> GetPayrollStatus()
+        {
+            var result = await _service.GetPayrollStatus();
+            return Ok(result);
+        }
+
     }
 }

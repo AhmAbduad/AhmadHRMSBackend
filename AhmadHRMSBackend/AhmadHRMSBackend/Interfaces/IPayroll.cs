@@ -6,5 +6,7 @@ namespace AhmadHRMSBackend.Interfaces
     {
 
         Task<List<SendPayrollDto>> GetPayrollRequest(GetPayrollRequestDto dto);
+
+        Task<List<GetPayrollStatusDto>> GetPayrollStatus();
     }
 }
