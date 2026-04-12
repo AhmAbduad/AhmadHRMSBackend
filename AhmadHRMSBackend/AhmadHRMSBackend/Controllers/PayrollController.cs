@@ -31,5 +31,25 @@ namespace AhmadHRMSBackend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetEmployeeForPayroll")]
+        public async Task<IActionResult> GetEmployeeForPayroll()
+        {
+            var result = await _service.GetEmployeeForPayroll();
+            return Ok(result);
+        }
+
+        [HttpPost("SubmitPayrollRequest")]
+        public async Task<IActionResult> SubmitPayrollRequest([FromBody] SubmitPayrollRequestDto dto)
+        {
+            var result = await _service.SubmitPayrollRequest(dto);
+            return Ok(result);
+        }
+
+        [HttpPost("ChangePayrollStatus")]
+        public async Task<IActionResult> ChangePayrollStatus(ChangePayrollStatusDto dto)
+        {
+            var result = await _service.ChangePayrollStatus(dto);
+            return Ok(result);
+        }
     }
 }
