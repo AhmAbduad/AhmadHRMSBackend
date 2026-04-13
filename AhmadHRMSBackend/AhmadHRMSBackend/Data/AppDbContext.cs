@@ -8,6 +8,7 @@ using AhmadHRMSBackend.Models.LeaveStatus;
 using AhmadHRMSBackend.Models.LeaveTypes;
 using AhmadHRMSBackend.Models.PayrollRequests;
 using AhmadHRMSBackend.Models.PayrollStatus;
+using AhmadHRMSBackend.Models.Performance;
 using AhmadHRMSBackend.Models.Position;
 using AhmadHRMSBackend.Models.Status;
 using AhmadHRMSBackend.Models.TimesheetDetails;
@@ -51,6 +52,13 @@ namespace AhmadHRMSBackend.Data
 
         public DbSet<PayrollStatus> PayrollStatus { get; set; }
 
+        public DbSet<Performance> Performance { get; set; }
+
+        public DbSet<PerformanceGoal> PerformanceGoal { get; set; }
+
+        public DbSet<PerformanceAchievement> PerformanceAchievement { get; set; }
+
+        public DbSet<PerformancePeriod> PerformancePeriod { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -158,6 +166,66 @@ namespace AhmadHRMSBackend.Data
                 .WithMany(s=>s.PayrollRequests)
                 .HasForeignKey(l=>l.StatusId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<Performance>()
+                .HasOne(l=>l.Employee)
+                .WithMany(s=>s.Performance)
+                .HasForeignKey(l=>l.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<PerformanceGoal>()
+                .HasOne(l=>l.Performance)
+                .WithMany(s=>s.PerformanceGoal)
+                .HasForeignKey(l=>l.PerformanceId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<PerformanceAchievement>()
+                .HasOne(l=>l.Performance)
+                .WithMany(s=>s.PerformanceAcheivement)
+                .HasForeignKey(l=>l.PerformanceId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<Performance>()
+                .Property(p => p.Rating)
+                .HasPrecision(3, 2);
+
+            modelBuilder.Entity<Performance>()
+                .HasOne(l=>l.PerformancePeriod)
+                .WithMany(s=>s.Performances)
+                .HasForeignKey(l=>l.PeriodId)  
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<PerformancePeriod>().HasData(
+                    new PerformancePeriod { PerformancePeriodId = 1, PeriodName = "Q1 2026", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 2, PeriodName = "Q2 2026", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 3, PeriodName = "Q3 2026", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 4, PeriodName = "Q4 2026", IsDeleted = false },
+
+                    new PerformancePeriod { PerformancePeriodId = 5, PeriodName = "Q1 2027", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 6, PeriodName = "Q2 2027", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 7, PeriodName = "Q3 2027", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 8, PeriodName = "Q4 2027", IsDeleted = false },
+
+
+                    new PerformancePeriod { PerformancePeriodId = 9, PeriodName =  "Q1 2028", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 10, PeriodName = "Q2 2028", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 11, PeriodName = "Q3 2028", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 12, PeriodName = "Q4 2028", IsDeleted = false },
+
+                    new PerformancePeriod { PerformancePeriodId = 13, PeriodName = "Q1 2029", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 14, PeriodName = "Q2 2029", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 15, PeriodName = "Q3 2029", IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 16, PeriodName = "Q4 2029", IsDeleted = false },
+
+
+                    new PerformancePeriod { PerformancePeriodId = 17, PeriodName = "Q1 2030" , IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 18, PeriodName = "Q2 2030" , IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 19, PeriodName = "Q3 2030" , IsDeleted = false },
+                    new PerformancePeriod { PerformancePeriodId = 20, PeriodName = "Q4 2030" , IsDeleted = false }
+                );
 
         }
     }

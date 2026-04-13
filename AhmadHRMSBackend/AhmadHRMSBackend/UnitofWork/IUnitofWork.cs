@@ -16,6 +16,8 @@ namespace AhmadHRMSBackend.UnitofWork
 
         IPayroll Payroll { get; }
 
+        IPerformances Performances { get; }
+
         Task<int> SaveChangesAsync();
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();
