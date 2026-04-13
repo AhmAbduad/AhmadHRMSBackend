@@ -1,4 +1,5 @@
-﻿using AhmadHRMSBackend.UnitofWork;
+﻿using AhmadHRMSBackend.dto.Performance;
+using AhmadHRMSBackend.UnitofWork;
 
 namespace AhmadHRMSBackend.Services.Performances
 {
@@ -11,6 +12,11 @@ namespace AhmadHRMSBackend.Services.Performances
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<List<GetPerformancePeriodDto>> GetPerfromancePeriod()
+        {
+            var result = await _unitOfWork.Performances.GetPerfromancePeriod();
+            return result;
+        }
 
     }
 }

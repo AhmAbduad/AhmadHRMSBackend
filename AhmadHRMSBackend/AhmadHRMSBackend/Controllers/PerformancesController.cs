@@ -16,10 +16,11 @@ namespace AhmadHRMSBackend.Controllers
             _service = service;
         }
 
-        //[HttpGet("GetPerfromancePeriod")]
-        //public async Task<IActionResult> GetPerfromancePeriod()
-        //{
-
-        //}
+        [HttpGet("GetPerfromancePeriod")]
+        public async Task<IActionResult> GetPerfromancePeriod()
+        {
+            var result = await _service.GetPerfromancePeriod();
+            return Ok(result);
+        }
     }
 }
