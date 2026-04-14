@@ -1,4 +1,5 @@
-﻿using AhmadHRMSBackend.Services.Payroll;
+﻿using AhmadHRMSBackend.dto.Performance;
+using AhmadHRMSBackend.Services.Payroll;
 using AhmadHRMSBackend.Services.Performances;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,5 +23,20 @@ namespace AhmadHRMSBackend.Controllers
             var result = await _service.GetPerfromancePeriod();
             return Ok(result);
         }
+
+        [HttpGet("GetDepartmentForPerformance")]
+        public async Task<IActionResult> GetDepartmentForPerformance()
+        {
+            var result = await _service.GetDepartmentForPerformance();
+            return Ok(result);
+        }
+
+        [HttpPost("GetPerformanceData")]
+        public async Task<IActionResult> GetPerformanceData([FromBody] PeriodnameDto dto )
+        {
+            var result = await _service.GetPerformanceData(dto);
+            return Ok(result);
+        }
+
     }
 }
