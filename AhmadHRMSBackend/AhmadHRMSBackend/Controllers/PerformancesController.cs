@@ -38,5 +38,18 @@ namespace AhmadHRMSBackend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetEmployeesForPerformance")]
+        public async Task<IActionResult> GetEmployeesForPerformance()
+        {
+            var result = await _service.GetEmployeesForPerformance();
+            return Ok(result);
+        }
+
+        [HttpPost("SubmitPerformanceData")]
+        public async Task<IActionResult> SubmitPerformanceData([FromBody] SubmitPerformanceDataDto dto)
+        {
+            var result = await _service.SubmitPerformanceData(dto);
+            return Ok(result);
+        }
     }
 }

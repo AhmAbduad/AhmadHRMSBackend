@@ -1,4 +1,5 @@
 ﻿using AhmadHRMSBackend.dto.Department;
+using AhmadHRMSBackend.dto.LeaveEmployee;
 using AhmadHRMSBackend.dto.Performance;
 using AhmadHRMSBackend.UnitofWork;
 
@@ -28,6 +29,18 @@ namespace AhmadHRMSBackend.Services.Performances
         public async Task<List<GetPerformanceDataDto>> GetPerformanceData(PeriodnameDto dto)
         {
             var result = await _unitOfWork.Performances.GetPerformanceData(dto);
+            return result;
+        }
+
+        public async Task<List<LeaveEmployeeDto>> GetEmployeesForPerformance()
+        {
+            var result = await _unitOfWork.Performances.GetEmployeesForPerformance();
+            return result;
+        }
+
+        public async Task<bool> SubmitPerformanceData(SubmitPerformanceDataDto dto)
+        {
+            var result = await _unitOfWork.Performances.SubmitPerformanceData(dto);
             return result;
         }
     }

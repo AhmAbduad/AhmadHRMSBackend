@@ -1,4 +1,5 @@
 ﻿using AhmadHRMSBackend.dto.Department;
+using AhmadHRMSBackend.dto.LeaveEmployee;
 using AhmadHRMSBackend.dto.Performance;
 
 namespace AhmadHRMSBackend.Interfaces
@@ -10,5 +11,9 @@ namespace AhmadHRMSBackend.Interfaces
         Task<List<DepartmentDto>> GetDepartmentForPerformance();
 
         Task<List<GetPerformanceDataDto>> GetPerformanceData(PeriodnameDto dto);
+
+        Task<List<LeaveEmployeeDto>> GetEmployeesForPerformance();
+
+        Task<bool> SubmitPerformanceData(SubmitPerformanceDataDto dto);
     }
 }
