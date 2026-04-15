@@ -26,5 +26,6 @@ namespace AhmadHRMSBackend.Models.Departments
 
         public ICollection<EmployeeList.EmployeeList> EmployeeList { get; set; } = new List<EmployeeList.EmployeeList>();
 
+        public ICollection<Reports.Reports> Reports { get; set; } = new List<Reports.Reports>();
     }
 }

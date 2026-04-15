@@ -18,6 +18,9 @@ namespace AhmadHRMSBackend.UnitofWork
 
         IPerformances Performances { get; }
 
+        IReports Reports { get; }
+
+
         Task<int> SaveChangesAsync();
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();

@@ -10,6 +10,7 @@ using AhmadHRMSBackend.Models.PayrollRequests;
 using AhmadHRMSBackend.Models.PayrollStatus;
 using AhmadHRMSBackend.Models.Performance;
 using AhmadHRMSBackend.Models.Position;
+using AhmadHRMSBackend.Models.Reports;
 using AhmadHRMSBackend.Models.Status;
 using AhmadHRMSBackend.Models.TimesheetDetails;
 using AhmadHRMSBackend.Models.Timesheets;
@@ -59,6 +60,15 @@ namespace AhmadHRMSBackend.Data
         public DbSet<PerformanceAchievement> PerformanceAchievement { get; set; }
 
         public DbSet<PerformancePeriod> PerformancePeriod { get; set; }
+
+        public DbSet<ReportTypes> ReportTypes { get; set; }
+
+        public DbSet<ReportPeriods> ReportPeriods { get; set; }
+
+        public DbSet<ReportStatus> ReportStatus { get; set; }
+
+        public DbSet<Reports>  Reports { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -227,6 +237,30 @@ namespace AhmadHRMSBackend.Data
                     new PerformancePeriod { PerformancePeriodId = 20, PeriodName = "Q4 2030" , IsDeleted = false }
                 );
 
+            modelBuilder.Entity<Reports>()
+                .HasOne(r => r.ReportType)
+                .WithMany(t => t.Reports)
+                .HasForeignKey(r => r.ReportTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+             modelBuilder.Entity<Reports>()
+                .HasOne(r => r.ReportPeriod)
+                .WithMany(p => p.Reports)
+                .HasForeignKey(r => r.ReportPeriodId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Reports>()
+                .HasOne(r => r.Departments)
+                .WithMany(d => d.Reports) 
+                .HasForeignKey(r => r.DepartmentId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Reports>()
+                .HasOne(r => r.ReportStatus)
+                .WithMany(s => s.Reports)
+                .HasForeignKey(r => r.ReportStatusId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -5,6 +5,7 @@ using AhmadHRMSBackend.DataAccessLayer.Leave;
 using AhmadHRMSBackend.DataAccessLayer.MarkAttendance;
 using AhmadHRMSBackend.DataAccessLayer.Payroll;
 using AhmadHRMSBackend.DataAccessLayer.Performances;
+using AhmadHRMSBackend.DataAccessLayer.Reports;
 using AhmadHRMSBackend.DataAccessLayer.TimeSheet;
 using AhmadHRMSBackend.Interfaces;
 using AhmadHRMSBackend.Services.Attendance;
@@ -13,6 +14,7 @@ using AhmadHRMSBackend.Services.Leave;
 using AhmadHRMSBackend.Services.MarkAttendance;
 using AhmadHRMSBackend.Services.Payroll;
 using AhmadHRMSBackend.Services.Performances;
+using AhmadHRMSBackend.Services.Reports;
 using AhmadHRMSBackend.Services.TimeSheet;
 using AhmadHRMSBackend.UnitofWork;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +47,8 @@ builder.Services.AddScoped<IPayroll, PayrollRepository>();
 builder.Services.AddScoped<PayrollService>();
 builder.Services.AddScoped<IPerformances, PerformancesRepository>();
 builder.Services.AddScoped<PerformancesService>();
-
+builder.Services.AddScoped<IReports, ReportsRepository>();
+builder.Services.AddScoped<ReportsService>();
 
 
 builder.Services.AddScoped<IUnitofWork, UnitofWork>();
