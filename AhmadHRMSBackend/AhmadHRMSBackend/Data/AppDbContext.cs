@@ -261,6 +261,32 @@ namespace AhmadHRMSBackend.Data
                 .WithMany(s => s.Reports)
                 .HasForeignKey(r => r.ReportStatusId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+
+            // 🔹 ReportTypes Seed
+            modelBuilder.Entity<ReportTypes>().HasData(
+                new ReportTypes { ReportTypeId = 1, ReportTypeName = "Attendance", IsDeleted = false },
+                new ReportTypes { ReportTypeId = 2, ReportTypeName = "Payroll", IsDeleted = false },
+                new ReportTypes { ReportTypeId = 3, ReportTypeName = "Performance", IsDeleted = false },
+                new ReportTypes { ReportTypeId = 4, ReportTypeName = "Leave", IsDeleted = false },
+                new ReportTypes { ReportTypeId = 5, ReportTypeName = "Timesheet", IsDeleted = false }
+            );
+
+            // 🔹 ReportPeriods Seed
+            modelBuilder.Entity<ReportPeriods>().HasData(
+                new ReportPeriods { ReportPeriodId = 1, ReportPeriodName = "Daily", IsDeleted = false },
+                new ReportPeriods { ReportPeriodId = 2, ReportPeriodName = "Weekly", IsDeleted = false },
+                new ReportPeriods { ReportPeriodId = 3, ReportPeriodName = "Monthly", IsDeleted = false },
+                new ReportPeriods { ReportPeriodId = 4, ReportPeriodName = "Quarterly", IsDeleted = false },
+                new ReportPeriods { ReportPeriodId = 5, ReportPeriodName = "Yearly", IsDeleted = false }
+            );
+
+            // 🔹 ReportStatus Seed
+            modelBuilder.Entity<ReportStatus>().HasData(
+                new ReportStatus { ReportStatusId = 1, ReportStatusName = "Completed", IsDeleted = false },
+                new ReportStatus { ReportStatusId = 2, ReportStatusName = "Scheduled", IsDeleted = false },
+                new ReportStatus { ReportStatusId = 3, ReportStatusName = "Draft", IsDeleted = false }
+            );
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AhmadHRMSBackend.Services.Performances;
+﻿using AhmadHRMSBackend.dto.Reports;
+using AhmadHRMSBackend.Services.Performances;
 using AhmadHRMSBackend.Services.Reports;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,32 @@ namespace AhmadHRMSBackend.Controllers
             _service = service;
         }
 
+        [HttpGet("GetReportTypes")]
+        public async Task<IActionResult> GetReportTypes()
+        {
+            var result = await _service.GetReportTypes();
+            return Ok(result);
+        }
 
+        [HttpGet("GetReportPeriods")]
+        public async Task<IActionResult> GetReportPeriods()
+        {
+            var result = await _service.GetReportPeriods();
+            return Ok(result);
+        }
+
+        [HttpGet("GetDepartmentForReport")]
+        public async Task<IActionResult> GetDepartmentForReport()
+        {
+            var result = await _service.GetDepartmentForReport();
+            return Ok(result);
+        }
+
+        //[HttpPost("GetReportsList")]
+        //public async Task<IActionResult> GetReportsList([FromBody] GetReportListDto dto)
+        //{
+        //    var result = await _service.GetReportsList(dto);
+        //    return Ok(result);
+        //}
     }
 }
