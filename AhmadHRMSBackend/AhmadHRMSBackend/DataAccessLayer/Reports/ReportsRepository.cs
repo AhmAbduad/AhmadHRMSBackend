@@ -106,5 +106,124 @@ namespace AhmadHRMSBackend.DataAccessLayer.Reports
 
             return result;
         }
+
+        public async Task<List<ReportStatusDto>> GetReportStatus()
+        {
+            var result = await _context.ReportStatus
+            .Where(x => !x.IsDeleted)
+            .Select(x => new ReportStatusDto
+            {
+                id = x.ReportStatusId,
+                value = x.ReportStatusName.ToLower(), // e.g. monthly
+                label = x.ReportStatusName            // e.g. Monthly
+            })
+            .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<bool> SubmitReportList(SubmitReportListDto dto)
+        {
+            if (dto == null)
+                return false;
+
+            // ✅ Validate Foreign Keys (optional but best practice)
+            var typeExists = await _context.ReportTypes
+                .AnyAsync(x => x.ReportTypeId == dto.reportTypeId && !x.IsDeleted);
+
+            var periodExists = await _context.ReportPeriods
+                .AnyAsync(x => x.ReportPeriodId == dto.reportPeriodId && !x.IsDeleted);
+
+            var deptExists = await _context.Departments
+                .AnyAsync(x => x.DepartmentsID == dto.departmentId && !x.IsDeleted);
+
+            var statusExists = await _context.ReportStatus
+                .AnyAsync(x => x.ReportStatusId == dto.reportStatusId && !x.IsDeleted);
+
+            if (!typeExists || !periodExists || !deptExists || !statusExists)
+                return false;
+
+            //// 🔹 Calculate File Size & Format
+            //string fileSize = null;
+            //string format = null;
+
+            //if (dto.fileData != null && dto.fileData.Length > 0)
+            //{
+            //    fileSize = $"{(dto.fileData.Length / 1024.0):0.00} KB";
+
+            //    // Optional: simple format detection (basic)
+            //    format = "FILE";
+            //}
+
+            // ✅ Convert file to byte[]
+            byte[] fileBytes = null;
+
+            if (dto.fileData != null && dto.fileData.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    await dto.fileData.CopyToAsync(ms);
+                    fileBytes = ms.ToArray();
+                }
+            }
+
+            // 🔥 File Size (Direct from IFormFile)
+            string fileSize = dto.fileData != null
+                ? GetFileSize(dto.fileData.Length)
+                : "0 KB";
+
+            // 🔥 File Format (BEST way from ContentType)
+            string format = dto.fileData != null
+                ? GetFileFormatFromContentType(dto.fileData.ContentType)
+                : "unknown";
+
+            // ✅ Create Report
+            var report = new AhmadHRMSBackend.Models.Reports.Reports
+            {
+                ReportName = dto.reportName,
+                ReportTypeId = dto.reportTypeId,
+                ReportPeriodId = dto.reportPeriodId,
+                DepartmentId = dto.departmentId,
+                ReportStatusId = dto.reportStatusId,
+
+                GeneratedDate = dto.generatedDate,
+                GeneratedBy = dto.generatedBy,
+                Description = dto.description,
+
+                FileData = fileBytes,
+                FileSize = fileSize,
+                Format = format,
+                IsDeleted = false
+            };
+
+            _context.Reports.Add(report);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        private string GetFileSize(long length)
+        {
+            if (length < 1024)
+                return $"{length} B";
+
+            if (length < 1024 * 1024)
+                return $"{(length / 1024.0):0.00} KB";
+
+            return $"{(length / (1024.0 * 1024)):0.00} MB";
+        }
+
+        private string GetFileFormatFromContentType(string contentType)
+        {
+            return contentType switch
+            {
+                "application/pdf" => "PDF",
+                "image/png" => "PNG",
+                "image/jpeg" => "JPG",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => "Excel",
+                "application/vnd.ms-excel" => "Excel",
+                _ => "unknown"
+            };
+        }
     }
 }

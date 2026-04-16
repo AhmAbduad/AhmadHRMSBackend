@@ -37,5 +37,17 @@ namespace AhmadHRMSBackend.Services.Reports
             var result = await _unitOfWork.Reports.GetReportsList(dto);
             return result;
         }
+
+        public async Task<List<ReportStatusDto>> GetReportStatus()
+        {
+            var result = await _unitOfWork.Reports.GetReportStatus();
+            return result;
+        }
+
+        public async Task<bool> SubmitReportList(SubmitReportListDto dto)
+        {
+            var result = await _unitOfWork.Reports.SubmitReportList(dto);
+            return result;
+        }
     }
 }

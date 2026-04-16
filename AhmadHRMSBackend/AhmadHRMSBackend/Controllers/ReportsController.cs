@@ -44,5 +44,19 @@ namespace AhmadHRMSBackend.Controllers
             var result = await _service.GetReportsList(dto);
             return Ok(result);
         }
+
+        [HttpGet("GetReportStatus")]
+        public async Task<IActionResult> GetReportStatus()
+        {
+            var result = await _service.GetReportStatus();
+            return Ok(result);
+        }
+
+        [HttpPost("SubmitReportList")]
+        public async Task<IActionResult> SubmitReportList([FromForm] SubmitReportListDto dto)
+        {
+            var result = await _service.SubmitReportList(dto);
+            return Ok(result);
+        }
     }
 }
