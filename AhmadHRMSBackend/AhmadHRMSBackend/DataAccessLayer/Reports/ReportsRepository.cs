@@ -58,5 +58,53 @@ namespace AhmadHRMSBackend.DataAccessLayer.Reports
 
             return result;
         }
+
+        public async Task<List<ReturnReportListDto>> GetReportsList(GetReportListDto dto)
+        {
+            var query = _context.Reports
+            .Include(r => r.ReportType)
+            .Include(r => r.ReportPeriod)
+            .Include(r => r.ReportStatus)
+            .Include(r => r.Departments)
+            .Where(r => !r.IsDeleted)
+            .AsQueryable();
+
+            // 🔥 Dynamic Filters
+
+            if (!string.IsNullOrEmpty(dto.reporttype) && dto.reporttype.ToLower() != "all")
+            {
+                query = query.Where(r => r.ReportType.ReportTypeName.ToLower() == dto.reporttype.ToLower());
+            }
+
+            if (!string.IsNullOrEmpty(dto.reportperiod) && dto.reportperiod.ToLower() != "all")
+            {
+                query = query.Where(r => r.ReportPeriod.ReportPeriodName.ToLower() == dto.reportperiod.ToLower());
+            }
+
+            if (!string.IsNullOrEmpty(dto.reportdepartment) && dto.reportdepartment.ToLower() != "all")
+            {
+                query = query.Where(r => r.Departments.Value.ToLower() == dto.reportdepartment.ToLower());
+            }
+
+            var data = await query.ToListAsync();
+
+            // 🔹 Mapping
+            var result = data.Select(r => new ReturnReportListDto
+            {
+                id = r.ReportId,
+                name = r.ReportName,
+                type = r.ReportType?.ReportTypeName,
+                period = r.ReportPeriod?.ReportPeriodName,
+                department = r.Departments?.Label,
+                generatedDate = r.GeneratedDate ?? DateTime.MinValue,
+                generatedBy = r.GeneratedBy ?? "--",
+                status = r.ReportStatus?.ReportStatusName,
+                fileSize = r.FileSize ?? "--",
+                format = r.Format ?? "--",
+                description = r.Description ?? "--"
+            }).ToList();
+
+            return result;
+        }
     }
 }

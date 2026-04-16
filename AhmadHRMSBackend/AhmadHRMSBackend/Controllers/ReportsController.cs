@@ -38,11 +38,11 @@ namespace AhmadHRMSBackend.Controllers
             return Ok(result);
         }
 
-        //[HttpPost("GetReportsList")]
-        //public async Task<IActionResult> GetReportsList([FromBody] GetReportListDto dto)
-        //{
-        //    var result = await _service.GetReportsList(dto);
-        //    return Ok(result);
-        //}
+        [HttpPost("GetReportsList")]
+        public async Task<IActionResult> GetReportsList([FromBody] GetReportListDto dto)
+        {
+            var result = await _service.GetReportsList(dto);
+            return Ok(result);
+        }
     }
 }

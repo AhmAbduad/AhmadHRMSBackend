@@ -32,10 +32,10 @@ namespace AhmadHRMSBackend.Services.Reports
             return result;
         }
 
-        //public async Task<List<ReturnReportListDto>> GetReportsList(GetReportListDto dto)
-        //{
-        //    var result = await _unitOfWork.Reports.GetReportsList(dto);
-        //    return result;
-        //}
+        public async Task<List<ReturnReportListDto>> GetReportsList(GetReportListDto dto)
+        {
+            var result = await _unitOfWork.Reports.GetReportsList(dto);
+            return result;
+        }
     }
 }

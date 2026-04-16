@@ -9,7 +9,8 @@ namespace AhmadHRMSBackend.Interfaces
 
         Task<List<ReportPeriodsDto>> GetReportPeriods();
 
-
         Task<List<DepartmentDto>> GetDepartmentForReport();
+
+        Task<List<ReturnReportListDto>> GetReportsList(GetReportListDto dto);
     }
 }
