@@ -1,5 +1,6 @@
 using AhmadHRMSBackend.Data;
 using AhmadHRMSBackend.DataAccessLayer.Attendance;
+using AhmadHRMSBackend.DataAccessLayer.Dashboard;
 using AhmadHRMSBackend.DataAccessLayer.EmployeeList;
 using AhmadHRMSBackend.DataAccessLayer.Leave;
 using AhmadHRMSBackend.DataAccessLayer.MarkAttendance;
@@ -9,6 +10,7 @@ using AhmadHRMSBackend.DataAccessLayer.Reports;
 using AhmadHRMSBackend.DataAccessLayer.TimeSheet;
 using AhmadHRMSBackend.Interfaces;
 using AhmadHRMSBackend.Services.Attendance;
+using AhmadHRMSBackend.Services.Dashboard;
 using AhmadHRMSBackend.Services.EmployeeList;
 using AhmadHRMSBackend.Services.Leave;
 using AhmadHRMSBackend.Services.MarkAttendance;
@@ -49,6 +51,8 @@ builder.Services.AddScoped<IPerformances, PerformancesRepository>();
 builder.Services.AddScoped<PerformancesService>();
 builder.Services.AddScoped<IReports, ReportsRepository>();
 builder.Services.AddScoped<ReportsService>();
+builder.Services.AddScoped<IDashboard, DashboardRepository>();
+builder.Services.AddScoped<DashboardService>();
 
 
 builder.Services.AddScoped<IUnitofWork, UnitofWork>();

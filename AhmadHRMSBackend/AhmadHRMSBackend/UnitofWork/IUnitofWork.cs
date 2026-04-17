@@ -20,6 +20,7 @@ namespace AhmadHRMSBackend.UnitofWork
 
         IReports Reports { get; }
 
+        IDashboard Dashboard { get; }
 
         Task<int> SaveChangesAsync();
         Task BeginTransactionAsync();
