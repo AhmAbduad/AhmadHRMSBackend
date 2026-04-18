@@ -1,11 +1,13 @@
 ﻿using AhmadHRMSBackend.dto.Performance;
 using AhmadHRMSBackend.Services.Payroll;
 using AhmadHRMSBackend.Services.Performances;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AhmadHRMSBackend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PerformancesController : ControllerBase

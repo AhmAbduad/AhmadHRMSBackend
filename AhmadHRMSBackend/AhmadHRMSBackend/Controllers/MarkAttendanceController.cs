@@ -2,11 +2,13 @@
 using AhmadHRMSBackend.dto.SaveAttendance;
 using AhmadHRMSBackend.Services.EmployeeList;
 using AhmadHRMSBackend.Services.MarkAttendance;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AhmadHRMSBackend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MarkAttendanceController : ControllerBase

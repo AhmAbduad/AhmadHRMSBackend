@@ -22,6 +22,8 @@ namespace AhmadHRMSBackend.UnitofWork
 
         IDashboard Dashboard { get; }
 
+        ILogin Login { get; }
+
         Task<int> SaveChangesAsync();
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();

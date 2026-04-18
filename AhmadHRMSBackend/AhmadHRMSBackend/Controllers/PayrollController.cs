@@ -1,11 +1,13 @@
 ﻿using AhmadHRMSBackend.dto.Payroll;
 using AhmadHRMSBackend.Services.Payroll;
 using AhmadHRMSBackend.Services.TimeSheet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AhmadHRMSBackend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PayrollController : ControllerBase

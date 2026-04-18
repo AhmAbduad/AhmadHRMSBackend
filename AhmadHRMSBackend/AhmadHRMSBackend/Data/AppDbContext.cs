@@ -6,6 +6,7 @@ using AhmadHRMSBackend.Models.EmployeeList;
 using AhmadHRMSBackend.Models.LeaveRequests;
 using AhmadHRMSBackend.Models.LeaveStatus;
 using AhmadHRMSBackend.Models.LeaveTypes;
+using AhmadHRMSBackend.Models.Login;
 using AhmadHRMSBackend.Models.PayrollRequests;
 using AhmadHRMSBackend.Models.PayrollStatus;
 using AhmadHRMSBackend.Models.Performance;
@@ -68,6 +69,10 @@ namespace AhmadHRMSBackend.Data
         public DbSet<ReportStatus> ReportStatus { get; set; }
 
         public DbSet<Reports>  Reports { get; set; }
+
+        public DbSet<Users> Users { get; set; }
+
+        public DbSet<Roles> Roles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -287,6 +292,42 @@ namespace AhmadHRMSBackend.Data
                 new ReportStatus { ReportStatusId = 2, ReportStatusName = "Scheduled", IsDeleted = false },
                 new ReportStatus { ReportStatusId = 3, ReportStatusName = "Draft", IsDeleted = false }
             );
+
+            modelBuilder.Entity<Users>()
+                .HasOne(u=>u.Employee)
+                .WithOne(e => e.Users)
+                .HasForeignKey<Users>(u => u.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<Users>()
+                .HasOne(u => u.Role)
+                .WithMany(r => r.Users)
+                .HasForeignKey(u => u.RoleId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Roles>().HasData(
+                new Roles
+                {
+                    RoleId = 1,
+                    RoleName = "Admin",
+                    IsDeleted = false
+                },
+                new Roles
+                {
+                    RoleId = 2,
+                    RoleName = "HR",
+                    IsDeleted = false
+                },
+                new Roles
+                {
+                    RoleId = 3,
+                    RoleName = "Employee",
+                    IsDeleted = false
+                }
+            );
+
+
         }
     }
 }

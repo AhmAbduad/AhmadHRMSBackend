@@ -2,11 +2,13 @@
 using AhmadHRMSBackend.dto.EmployeeList;
 using AhmadHRMSBackend.dto.UpdateEmployee;
 using AhmadHRMSBackend.Services.EmployeeList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AhmadHRMSBackend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeListController : ControllerBase

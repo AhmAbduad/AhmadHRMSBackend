@@ -3,6 +3,7 @@ using AhmadHRMSBackend.DataAccessLayer.Attendance;
 using AhmadHRMSBackend.DataAccessLayer.Dashboard;
 using AhmadHRMSBackend.DataAccessLayer.EmployeeList;
 using AhmadHRMSBackend.DataAccessLayer.Leave;
+using AhmadHRMSBackend.DataAccessLayer.Login;
 using AhmadHRMSBackend.DataAccessLayer.MarkAttendance;
 using AhmadHRMSBackend.DataAccessLayer.Payroll;
 using AhmadHRMSBackend.DataAccessLayer.Performances;
@@ -13,6 +14,7 @@ using AhmadHRMSBackend.Services.Attendance;
 using AhmadHRMSBackend.Services.Dashboard;
 using AhmadHRMSBackend.Services.EmployeeList;
 using AhmadHRMSBackend.Services.Leave;
+using AhmadHRMSBackend.Services.Login;
 using AhmadHRMSBackend.Services.MarkAttendance;
 using AhmadHRMSBackend.Services.Payroll;
 using AhmadHRMSBackend.Services.Performances;
@@ -20,6 +22,8 @@ using AhmadHRMSBackend.Services.Reports;
 using AhmadHRMSBackend.Services.TimeSheet;
 using AhmadHRMSBackend.UnitofWork;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +57,9 @@ builder.Services.AddScoped<IReports, ReportsRepository>();
 builder.Services.AddScoped<ReportsService>();
 builder.Services.AddScoped<IDashboard, DashboardRepository>();
 builder.Services.AddScoped<DashboardService>();
+builder.Services.AddScoped<ILogin,LoginRepository>();
+builder.Services.AddScoped<LoginService>();
+
 
 
 builder.Services.AddScoped<IUnitofWork, UnitofWork>();
@@ -70,6 +77,55 @@ builder.Services.AddCors(options =>
             );
 });
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Enter JWT token like: Bearer {your token}"
+    });
+
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+
+builder.Services.AddAuthentication("JwtBearer")
+    .AddJwtBearer("JwtBearer", options =>
+    {
+        var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
+
+builder.Services.AddScoped<JwtService>();
+
 
 var app = builder.Build();
 
@@ -86,6 +142,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAngularDev");
+
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

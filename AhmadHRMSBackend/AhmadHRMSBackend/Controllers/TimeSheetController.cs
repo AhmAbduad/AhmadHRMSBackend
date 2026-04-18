@@ -1,11 +1,13 @@
 ﻿using AhmadHRMSBackend.dto.TimeSheetDetails;
 using AhmadHRMSBackend.Services.Leave;
 using AhmadHRMSBackend.Services.TimeSheet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AhmadHRMSBackend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TimeSheetController : ControllerBase

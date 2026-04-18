@@ -1,6 +1,7 @@
 ﻿using AhmadHRMSBackend.Models.AttendanceSummary;
 using AhmadHRMSBackend.Models.Departments;
 using AhmadHRMSBackend.Models.LeaveRequests;
+using AhmadHRMSBackend.Models.Login;
 using AhmadHRMSBackend.Models.PayrollRequests;
 using AhmadHRMSBackend.Models.Performance;
 using AhmadHRMSBackend.Models.Position;
@@ -80,5 +81,7 @@ namespace AhmadHRMSBackend.Models.EmployeeList
         public ICollection<PayrollRequests.PayrollRequests> PayrollRequests { get; set; } = new List<PayrollRequests.PayrollRequests>();
 
         public ICollection<Performance.Performance> Performance { get; set; } = new List<Performance.Performance>();
+
+        public Users Users { get; set; }
     }
 }

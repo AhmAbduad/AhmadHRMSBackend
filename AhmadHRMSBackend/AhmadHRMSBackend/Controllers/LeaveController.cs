@@ -3,11 +3,13 @@ using AhmadHRMSBackend.dto.SaveAttendance;
 using AhmadHRMSBackend.dto.SubmitLeaveRequest;
 using AhmadHRMSBackend.Services.Leave;
 using AhmadHRMSBackend.Services.MarkAttendance;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AhmadHRMSBackend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LeaveController : ControllerBase
