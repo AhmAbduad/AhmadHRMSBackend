@@ -1,4 +1,6 @@
 ﻿using AhmadHRMSBackend.Data;
+using AhmadHRMSBackend.dto.Department;
+using AhmadHRMSBackend.dto.GetAttendanceRecord;
 using AhmadHRMSBackend.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,14 +24,34 @@ namespace AhmadHRMSBackend.DataAccessLayer.Attendance
         }
 
 
-        public async Task<List<AhmadHRMSBackend.Models.AttendanceRecord.AttendanceRecord>> GetAttendanceRecord()
+        public async Task<List<GetAttendanceRecordDto>> GetAttendanceRecord(AttendanceRecordMonthDto dto)
         {
-             return await _context.AttendanceRecords
-                .Include(a => a.Employee) // 🔹 Join with Employee table
-                .ThenInclude(e => e.Departments) 
-                .Where(a => !a.IsDeleted)
-                .OrderByDescending(a => a.Date)
+            if (dto == null || dto.month <= 0 || dto.month > 12)
+                return new List<GetAttendanceRecordDto>();
+
+            var currentYear = DateTime.Now.Year;
+
+            var data = await _context.AttendanceRecords
+                .Where(x => !x.IsDeleted
+                    && x.Date.Month == dto.month
+                    && x.Date.Year == currentYear) // ✅ filter by current year
+                .Include(x => x.Employee)
+                    .ThenInclude(e => e.Departments)
+                .Select(x => new GetAttendanceRecordDto
+                {
+                    EmployeeId = x.EmployeeId,
+                    EmployeeName = x.Employee.Name,
+                    Department = x.Employee.Departments.Label,
+                    Date = x.Date,
+                    CheckIn = x.CheckIn,
+                    CheckOut = x.CheckOut,
+                    Status = x.Status,
+                    Avatar = x.Employee.avatar
+                })
+                .OrderByDescending(x => x.Date)
                 .ToListAsync();
+
+            return data;
         }
 
         public async Task<AhmadHRMSBackend.Models.AttendanceSummary.AttendanceSummary> GetAttendanceSummary(int id)
@@ -40,6 +62,21 @@ namespace AhmadHRMSBackend.DataAccessLayer.Attendance
             .OrderByDescending(a => a.Year)
             .ThenByDescending(a => a.Month) // 🔹 Latest month first
             .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<DepartmentDto>> GetDepartmentForAttendance()
+        {
+            var data = await _context.Departments
+           .Where(d => !d.IsDeleted)
+           .Select(d => new DepartmentDto
+           {
+               id = d.DepartmentsID,
+               Value = d.Value,
+               Label = d.Label
+           })
+           .ToListAsync();
+
+            return data;
         }
     }
 }

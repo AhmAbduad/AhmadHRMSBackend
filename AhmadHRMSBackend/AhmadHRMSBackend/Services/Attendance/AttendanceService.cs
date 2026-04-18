@@ -1,4 +1,5 @@
-﻿using AhmadHRMSBackend.dto.EmployeeList;
+﻿using AhmadHRMSBackend.dto.Department;
+using AhmadHRMSBackend.dto.EmployeeList;
 using AhmadHRMSBackend.dto.GetAttendanceInfo;
 using AhmadHRMSBackend.dto.GetAttendanceRecord;
 using AhmadHRMSBackend.dto.GetAttendanceSummary;
@@ -32,24 +33,11 @@ namespace AhmadHRMSBackend.Services.Attendance
         }
 
 
-        public async Task<List<GetAttendanceRecordDto>> GetAttendanceRecord()
+        public async Task<List<GetAttendanceRecordDto>> GetAttendanceRecord(AttendanceRecordMonthDto dto)
         {
-            var attendancerecord = await _unitOfWork.Attendance.GetAttendanceRecord();
+            var attendancerecord = await _unitOfWork.Attendance.GetAttendanceRecord(dto);
 
-            if (attendancerecord == null)
-                return null;
-
-            return attendancerecord.Select(e => new GetAttendanceRecordDto
-            {
-                EmployeeId = e.EmployeeId,
-                EmployeeName = e.Employee.Name,
-                Department = e.Employee.Departments.Label,
-                Date = e.Date,
-                CheckIn = e.CheckIn, 
-                CheckOut = e.CheckOut,
-                Status = e.Status,
-                Avatar = e.Employee.avatar
-            }).ToList();
+            return attendancerecord;
         }
 
         public async Task<GetAttendanceSummaryDto> GetAttendanceSummary(int id)
@@ -69,6 +57,12 @@ namespace AhmadHRMSBackend.Services.Attendance
                 Late = e.Late,
                 Leave = e.Leave
             };
+        }
+
+        public async Task<List<DepartmentDto>> GetDepartmentForAttendance()
+        {
+            var result = await _unitOfWork.Attendance.GetDepartmentForAttendance();
+            return result;
         }
     }
 }

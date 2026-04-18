@@ -1,4 +1,5 @@
-﻿using AhmadHRMSBackend.Services.Attendance;
+﻿using AhmadHRMSBackend.dto.GetAttendanceRecord;
+using AhmadHRMSBackend.Services.Attendance;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,10 +28,10 @@ namespace AhmadHRMSBackend.Controllers
         }
 
 
-        [HttpGet("GetAttendanceRecord")]
-        public async Task<IActionResult> GetAttendanceRecord()
+        [HttpPost("GetAttendanceRecord")]
+        public async Task<IActionResult> GetAttendanceRecord([FromBody] AttendanceRecordMonthDto dto)
         {
-            var attendancerecord = await _service.GetAttendanceRecord();
+            var attendancerecord = await _service.GetAttendanceRecord(dto);
 
             return Ok(attendancerecord);
         }
@@ -42,5 +43,13 @@ namespace AhmadHRMSBackend.Controllers
             var attendancesummary = await _service.GetAttendanceSummary(id);
             return Ok(attendancesummary);   
         }
+
+        [HttpGet("GetDepartmentForAttendance")]
+        public async Task<IActionResult> GetDepartmentForAttendance()
+        {
+            var result = await _service.GetDepartmentForAttendance();
+            return Ok(result);
+        }
+
     }
 }
