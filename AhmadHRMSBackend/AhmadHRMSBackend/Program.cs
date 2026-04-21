@@ -124,6 +124,9 @@ builder.Services.AddAuthentication("JwtBearer")
         };
     });
 
+
+builder.WebHost.UseUrls("http://0.0.0.0:5279");
+
 builder.Services.AddScoped<JwtService>();
 
 
@@ -139,7 +142,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors("AllowAngularDev");
 
