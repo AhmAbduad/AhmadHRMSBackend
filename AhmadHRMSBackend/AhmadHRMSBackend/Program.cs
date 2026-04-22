@@ -70,7 +70,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularDev",
         policy => policy
             .WithOrigins(
-                "http://localhost:4200"
+                "http://localhost:4200",
+                "https://ahmadhrms.netlify.app"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
