@@ -127,7 +127,7 @@ builder.Services.AddAuthentication("JwtBearer")
     });
 
 
-builder.WebHost.UseUrls("http://0.0.0.0:5279");
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
 builder.Services.AddScoped<JwtService>();
 
