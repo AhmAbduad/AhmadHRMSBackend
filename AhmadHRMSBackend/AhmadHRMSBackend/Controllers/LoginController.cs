@@ -4,6 +4,8 @@ using AhmadHRMSBackend.Services.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
 
 namespace AhmadHRMSBackend.Controllers
 {
@@ -13,21 +15,37 @@ namespace AhmadHRMSBackend.Controllers
     public class LoginController : ControllerBase
     {
         public readonly LoginService _service;
+        private readonly ILogger<LoginController> _logger;
 
-        public LoginController(LoginService service)
+        public LoginController(LoginService service, ILogger<LoginController> logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         [HttpPost("CheckUser")]
         public async Task<IActionResult> CheckUser([FromBody] CheckUserDto dto)
         {
-            var token = await _service.CheckUser(dto);
+            _logger.LogInformation("CheckUser login attempt for email: {Email}", dto.email);
 
-            if (token == null)
-                return Unauthorized("Invalid credentials");
+            try
+            {
+                var token = await _service.CheckUser(dto);
 
-            return Ok(new { token });
+                if (token == null)
+                {
+                    _logger.LogWarning("Login failed - invalid credentials for email: {Email}", dto.email);
+                    return Unauthorized("Invalid credentials");
+                }
+
+                _logger.LogInformation("Login successful for email: {Email}", dto.email);
+                return Ok(new { token });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in CheckUser for email: {Email}", dto.email);
+                throw;
+            }
         }
     }
 }
