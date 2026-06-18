@@ -327,7 +327,186 @@ namespace AhmadHRMSBackend.Data
                 }
             );
 
+            modelBuilder.Entity<Departments>().HasData(
+                new Departments
+                {
+                    DepartmentsID = 1,
+                    Value = "IT",
+                    Label = "IT Department",
+                    IsDeleted = false
+                },
+                new Departments
+                {
+                    DepartmentsID = 2,
+                    Value = "HR",
+                    Label = "Human Resource",
+                    IsDeleted = false
+                }
+            );
 
+            modelBuilder.Entity<Position>().HasData(
+                new Position
+                {
+                    PositionID = 1,
+                    PositionName = "Manager",
+                    IsDeleted = false
+                },
+                new Position
+                {
+                    PositionID = 2,
+                    PositionName = "Developer",
+                    IsDeleted = false
+                }
+            );
+
+            modelBuilder.Entity<Status>().HasData(
+                new Status
+                {
+                    StatusID = 1,
+                    StatusName = "Active",
+                    IsDeleted = false
+                },
+                new Status
+                {
+                    StatusID = 2,
+                    StatusName = "Inactive",
+                    IsDeleted = false
+                }
+            );
+
+
+            modelBuilder.Entity<AttendanceInfo>().HasData(
+                new AttendanceInfo
+                {
+                    AttendanceInfoId = 1,
+                    CheckInTime = new DateTime(2025, 1, 1, 9, 0, 0),
+                    CheckOutTime = new DateTime(2025, 1, 1, 18, 0, 0),
+                    //TotalHours = "8h 15m",
+                    Status = "Present",
+                    IsDeleted = false
+                }
+            );
+
+            modelBuilder.Entity<LeaveTypes>().HasData(
+                new LeaveTypes
+                {
+                    LeaveTypeId = 1,
+                    LeaveTypeName = "Annual Leave",
+                    IsDeleted = false
+                },
+                new LeaveTypes
+                {
+                    LeaveTypeId = 2,
+                    LeaveTypeName = "Sick Leave",
+                    IsDeleted = false
+                },
+                new LeaveTypes
+                {
+                    LeaveTypeId = 3,
+                    LeaveTypeName = "Casual Leave",
+                    IsDeleted = false
+                },
+                new LeaveTypes
+                {
+                    LeaveTypeId = 4,
+                    LeaveTypeName = "Maternity Leave",
+                    IsDeleted = false
+                },
+                new LeaveTypes
+                {
+                    LeaveTypeId = 5,
+                    LeaveTypeName = "Paternity Leave",
+                    IsDeleted = false
+                },
+                new LeaveTypes
+                {
+                    LeaveTypeId = 6,
+                    LeaveTypeName = "Unpaid Leave",
+                    IsDeleted = false
+                }
+            );
+
+
+            modelBuilder.Entity<LeaveStatus>().HasData(
+                new LeaveStatus
+                {
+                    StatusId = 1,
+                    StatusName = "pending",
+                    IsDeleted = false
+                },
+                new LeaveStatus
+                {
+                    StatusId = 2,
+                    StatusName = "approved",
+                    IsDeleted = false
+                },
+                new LeaveStatus
+                {
+                    StatusId = 3,
+                    StatusName = "rejected",
+                    IsDeleted = false
+                }
+            );
+
+            modelBuilder.Entity<PayrollStatus>().HasData(
+                new PayrollStatus
+                {
+                    PayrollStatusId = 1,
+                    Label = "Pending",
+                    IsDeleted = false
+                },
+                new PayrollStatus
+                {
+                    PayrollStatusId = 2,
+                    Label = "Approved",
+                    IsDeleted = false
+                },
+                new PayrollStatus
+                {
+                    PayrollStatusId = 3,
+                    Label = "Rejected",
+                    IsDeleted = false
+                }
+            );
+
+            modelBuilder.Entity<EmployeeList>().HasData(
+                new EmployeeList
+                {
+                    EmployeeID = 1,
+                    DepartmentID = 1,
+                    PositionID = 1,
+                    StatusID = 1,
+                    Name = "Ahmad Ali",
+                    Email = "ahmad@gmail.com",
+                    JoinDate = new DateTime(2025, 1, 1),
+                    avatar = "AA"
+                }
+            );
+
+
+            modelBuilder.Entity<Users>().HasData(
+                new Users
+                {
+                    UserId = 1,
+                    EmployeeId = 1,
+                    RoleId = 1,
+                    Username = "admin_user",
+                    Email = "admin@example.com",
+
+                    // ⚠️ In real apps this should be hashed
+                    PasswordHash = "123456",
+                    PasswordSalt = "123456",
+
+                    IsActive = true,
+                    IsLocked = false,
+                    FailedLoginAttempts = 0,
+
+                    LastLoginDate = null,
+                    CreatedDate = new DateTime(2025, 1, 1),
+                    UpdatedDate = null,
+                    IsDeleted = false
+                }
+            );
         }
     }
 }
